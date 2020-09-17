@@ -87,7 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>include;../glew/include;../glfw/include;..</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;../glew/include;../glfw/include;..;../assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>include;../glew/include;../glfw/include;..</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;../glew/include;../glfw/include;..;../assimp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,19 +145,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\lodepng.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\maze.cpp" />
     <ClCompile Include="src\shaderProgram.cpp" />
+    <ClCompile Include="src\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\entity.h" />
+    <ClInclude Include="include\lodepng.h" />
     <ClInclude Include="include\maze.h" />
     <ClInclude Include="include\shaderProgram.h" />
     <ClInclude Include="include\testEntity.h" />
+    <ClInclude Include="include\texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\shaders\f_constant.glsl" />
-    <None Include="data\shaders\v_constant.glsl" />
+    <None Include="data\shaders\f_base_shader.glsl" />
+    <None Include="data\shaders\v_base_shader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

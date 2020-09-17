@@ -27,6 +27,12 @@
     <ClCompile Include="src\entity.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="src\texture.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lodepng.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\maze.h">
@@ -41,12 +47,18 @@
     <ClInclude Include="include\testEntity.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="include\texture.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lodepng.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\shaders\f_constant.glsl">
+    <None Include="data\shaders\f_base_shader.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
-    <None Include="data\shaders\v_constant.glsl">
+    <None Include="data\shaders\v_base_shader.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
   </ItemGroup>

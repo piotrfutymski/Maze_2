@@ -69,7 +69,7 @@ bool Maze::initWindow()
 
 bool Maze::loadShaders()
 {
-	_shaders.emplace_back("data/shaders/v_constant.glsl", "data/shaders/f_constant.glsl");
+	_shaders.emplace_back("data/shaders/v_base_shader.glsl", "data/shaders/f_base_shader.glsl");
 	return true;
 }
 

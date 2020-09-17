@@ -1,6 +1,5 @@
 #pragma once
 #include "entity.h"
-#include "assimp/Importer.hpp"
 
 class TestEntity :public Entity
 {
