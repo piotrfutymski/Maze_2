@@ -22,6 +22,7 @@ bool Maze::init()
 {
 	auto res = this->initGLFW();
 	res &= this->initWindow();
+	res &= this->initGlew();
 	res &= this->loadShaders();
 	res &= this->loadObjects();
 	return res;
@@ -68,11 +69,14 @@ bool Maze::initWindow()
 
 bool Maze::loadShaders()
 {
+	_shaders.emplace_back("data/shaders/v_constant.glsl", "data/shaders/f_constant.glsl");
 	return true;
 }
 
 bool Maze::loadObjects()
 {
+	_entities.push_back(std::move(std::make_unique<TestEntity>(_shaders[0], 0)));
+	_entities.push_back(std::move(std::make_unique<TestEntity>(_shaders[0], 1)));
 	return true;
 }
 
@@ -82,7 +86,10 @@ void Maze::processInput()
 
 void Maze::renderWindow()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	for (auto& entity : _entities)
+		entity->draw();
 
 	glfwSwapBuffers(_window);
 }

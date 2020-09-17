@@ -8,6 +8,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include "shaderProgram.h"
+#include "entity.h"
+#include "testEntity.h"
+#include <vector>
+#include <memory>
 
 class Maze
 {
@@ -33,5 +38,9 @@ private:
 private:
 
 	GLFWwindow* _window;
+
+	std::vector<std::unique_ptr<Entity>> _entities;
+
+	std::vector<ShaderProgram> _shaders;
 
 };

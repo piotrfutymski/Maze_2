@@ -144,11 +144,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\maze.cpp" />
+    <ClCompile Include="src\shaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\maze.h" />
+    <ClInclude Include="include\shaderProgram.h" />
+    <ClInclude Include="include\testEntity.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shaders\f_constant.glsl" />
+    <None Include="data\shaders\v_constant.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
