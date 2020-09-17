@@ -155,6 +155,7 @@
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\lodepng.h" />
     <ClInclude Include="include\maze.h" />
+    <ClInclude Include="include\model.h" />
     <ClInclude Include="include\shaderProgram.h" />
     <ClInclude Include="include\testEntity.h" />
     <ClInclude Include="include\texture.h" />
