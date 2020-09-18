@@ -123,9 +123,15 @@ private:
 				else if (i % 3 == 2)
 					for (int j = 0; j < 3; j++)
 						_mesh.push_back(vn[(temp[i] - 1) * 3 + j]);
+
+
 			}
-			for (int i = 3; i < 12; i++)
+			for (int i = 0; i < 12; i++)
 			{
+				if (i == 3)
+				{
+					i += 3;
+				}
 				if (i % 3 == 0)
 					for (int j = 0; j < 3; j++)
 						_mesh.push_back(v[(temp[i] - 1) * 3 + j]);

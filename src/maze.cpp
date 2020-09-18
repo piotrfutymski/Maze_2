@@ -30,14 +30,8 @@ bool Maze::init()
 
 bool Maze::initGLFW()
 {
-	glewExperimental = true;
 	if (glfwInit() == GLFW_FALSE)
 		return false;
-
-	glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL 
 
 	return true;
 	
@@ -45,7 +39,6 @@ bool Maze::initGLFW()
 
 bool Maze::initGlew()
 {
-	glewExperimental = true;
 	if (glewInit() != GLEW_OK)
 		return false;
 
@@ -61,24 +54,29 @@ bool Maze::initWindow()
 		glfwTerminate();
 		return false;
 	}
+
 	glfwMakeContextCurrent(_window);
-	glfwSetInputMode(_window, GLFW_STICKY_KEYS, GL_TRUE);
+	glfwSwapInterval(1); //Czekaj na 1 powrót plamki przed pokazaniem ukrytego bufora
+
 	return true;
 
 }
 
 bool Maze::loadShaders()
 {
+	glClearColor(0, 0, 0, 1); //Ustaw kolor czyszczenia bufora kolorów
+	glEnable(GL_DEPTH_TEST); //W³¹cz test g³êbokoœci na pikselach
 	_shaders.emplace_back("data/shaders/v_base_shader.glsl", "data/shaders/f_base_shader.glsl");
 	return true;
 }
 
 bool Maze::loadObjects()
 {
+	
+	_textures.emplace_back("data/textures/wall.png");
 	Model tmp;
 	tmp.loadMesh("data/models/wall.obj");
 	_models.push_back(std::move(tmp));
-	_textures.emplace_back("data/textures/wall.png");
 	_entities.push_back(std::move(std::make_unique<ImmobileObject>(_shaders[0], _models[0], _textures[0])));
 	return true;
 }

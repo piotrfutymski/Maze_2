@@ -15,7 +15,7 @@ struct Light
 };
 
 
-uniform sampler2D TEX;
+uniform sampler2D tex;
 //uniform mat3 NormalMatrix;
 //uniform Light Lights[256];
 //uniform int LightsCount;
@@ -24,7 +24,7 @@ uniform sampler2D TEX;
 
 void main()
 {
-  vec4 color = vec4(0.5, 0.5, 0.5, 1.0);
+  vec4 color = vec4(0.5, 0.5, 0.5, 1.0)* texture(tex, input_texcoords);
   //vec3 normal = normalize(NormalMatrix * input_normal);
   //vec3 viewDirection = normalize(CameraPos - input_coords);
   //
