@@ -10,10 +10,10 @@
 #include <iostream>
 #include "shaderProgram.h"
 #include "entity.h"
-#include "testEntity.h"
 #include <vector>
 #include <memory>
 #include "immobileObject.h"
+#include "camera.h"
 
 class Maze
 {
@@ -41,6 +41,8 @@ private:
 	GLFWwindow* _window;
 
 	std::vector<std::unique_ptr<Entity>> _entities;
+
+	Camera* _camera;
 
 	std::vector<Model> _models;
 	std::vector<Texture> _textures;

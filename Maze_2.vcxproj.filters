@@ -36,6 +36,9 @@
     <ClCompile Include="src\immobileObject.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="src\camera.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\maze.h">
@@ -45,9 +48,6 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="include\entity.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="include\testEntity.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="include\texture.h">
@@ -62,12 +62,21 @@
     <ClInclude Include="include\immobileObject.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="include\camera.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\f_base_shader.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="data\shaders\v_base_shader.glsl">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="data\shaders\f_camera_shader.glsl">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="data\shaders\v_camera_shader.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
   </ItemGroup>

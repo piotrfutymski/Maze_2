@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\immobileObject.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\lodepng.cpp" />
@@ -153,18 +154,20 @@
     <ClCompile Include="src\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\immobileObject.h" />
     <ClInclude Include="include\lodepng.h" />
     <ClInclude Include="include\maze.h" />
     <ClInclude Include="include\model.h" />
     <ClInclude Include="include\shaderProgram.h" />
-    <ClInclude Include="include\testEntity.h" />
     <ClInclude Include="include\texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\f_base_shader.glsl" />
+    <None Include="data\shaders\f_camera_shader.glsl" />
     <None Include="data\shaders\v_base_shader.glsl" />
+    <None Include="data\shaders\v_camera_shader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
