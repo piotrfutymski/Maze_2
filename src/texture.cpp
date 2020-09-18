@@ -28,5 +28,5 @@ Texture::~Texture()
 
 GLuint Texture::get() const
 {
-	return GLuint();
+	return id;
 }

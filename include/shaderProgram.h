@@ -19,6 +19,8 @@ public:
 
 	GLuint getID()const;
 
+	GLuint u(const char* variableName); //Pobiera numer slotu zwi¹zanego z dan¹ zmienn¹ jednorodn¹
+	GLuint a(const char* variableName); //Pobiera numer slotu zwi¹zanego z danym atrybutem
 
 private:
 

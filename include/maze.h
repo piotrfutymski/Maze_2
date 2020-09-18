@@ -13,6 +13,7 @@
 #include "testEntity.h"
 #include <vector>
 #include <memory>
+#include "immobileObject.h"
 
 class Maze
 {
@@ -41,6 +42,8 @@ private:
 
 	std::vector<std::unique_ptr<Entity>> _entities;
 
+	std::vector<Model> _models;
+	std::vector<Texture> _textures;
 	std::vector<ShaderProgram> _shaders;
 
 };

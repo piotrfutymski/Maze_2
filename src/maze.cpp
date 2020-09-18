@@ -75,8 +75,11 @@ bool Maze::loadShaders()
 
 bool Maze::loadObjects()
 {
-	_entities.push_back(std::move(std::make_unique<TestEntity>(_shaders[0], 0)));
-	_entities.push_back(std::move(std::make_unique<TestEntity>(_shaders[0], 1)));
+	Model tmp;
+	tmp.loadMesh("data/models/wall.obj");
+	_models.push_back(std::move(tmp));
+	_textures.emplace_back("data/textures/wall.png");
+	_entities.push_back(std::move(std::make_unique<ImmobileObject>(_shaders[0], _models[0], _textures[0])));
 	return true;
 }
 

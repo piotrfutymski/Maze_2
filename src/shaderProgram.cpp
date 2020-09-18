@@ -91,3 +91,13 @@ GLuint ShaderProgram::getID() const
 {
 	return _shaderProgramID;
 }
+
+//Pobierz numer slotu odpowiadaj¹cego zmiennej jednorodnej o nazwie variableName
+GLuint ShaderProgram::u(const char* variableName) {
+	return glGetUniformLocation(_shaderProgramID, variableName);
+}
+
+//Pobierz numer slotu odpowiadaj¹cego atrybutowi o nazwie variableName
+GLuint ShaderProgram::a(const char* variableName) {
+	return glGetAttribLocation(_shaderProgramID, variableName);
+}

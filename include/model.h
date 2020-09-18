@@ -20,6 +20,10 @@ public:
 		return VAO;
 	}
 
+	GLsizei count() const
+	{
+		return _mesh.size() / 8;
+	}
 
 	void loadMesh(std::string objPath, size_t iniAlloc=32000)
 	{
@@ -43,18 +47,23 @@ public:
 				if (data == "v")
 				{
 					file >> fx >> fy >> fz;
-					v.emplace_back(fx, fy, fz);
+					v.push_back(fx);
+					v.push_back(fy);
+					v.push_back(fz);
 				}
 				else if (data == "vt")
 				{
 					file >> fx >> fy;
-					vt.emplace_back(fx, fy);
+					vt.push_back(fx);
+					vt.push_back(fy);
 
 				}
 				else if (data == "vn")
 				{
 					file >> fx >> fy >> fz;
-					vn.emplace_back(fx, fy, fz);
+					vn.push_back(fx);
+					vn.push_back(fy);
+					vn.push_back(fz);
 				}
 				else if (data == "f")
 				{
@@ -137,15 +146,15 @@ private:
 		glGenBuffers(1, &VBO);
 		glBindVertexArray(VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(_mesh), &_mesh, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, _mesh.size()*sizeof(GLfloat), _mesh.data(), GL_STATIC_DRAW);
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)0);
 		glEnableVertexAttribArray(0);
 
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)3);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
 		glEnableVertexAttribArray(1);
 
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)5);
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(5*sizeof(GLfloat)));
 		glEnableVertexAttribArray(2);
 	}
 

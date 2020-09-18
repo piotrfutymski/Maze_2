@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\immobileObject.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\lodepng.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -153,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\entity.h" />
+    <ClInclude Include="include\immobileObject.h" />
     <ClInclude Include="include\lodepng.h" />
     <ClInclude Include="include\maze.h" />
     <ClInclude Include="include\model.h" />
