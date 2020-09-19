@@ -8,7 +8,7 @@ uniform sampler2D tex;
 
 void main()
 { 
-    if(texture(tex, input_texcoords) != (1.0,1.0,1.0,1.0))
+    if(texture(tex, input_texcoords) != vec4(1.0,1.0,1.0,1.0))
         pixelColor = vec4(1.0, 1.0, 1.0, 0.8)* texture(tex, input_texcoords);
     else
        pixelColor = vec4(1.0, 1.0, 1.0, 0.0);

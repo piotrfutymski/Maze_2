@@ -86,7 +86,7 @@ bool Maze::loadObjects()
 	_textures.emplace_back("data/textures/wall.png");
 	_textures.emplace_back("data/textures/c_ico.png");
 	Model tmp;
-	tmp.loadMesh("data/models/wall.obj");
+	tmp.loadMesh("data/models/unit.obj");
 	_models.push_back(std::move(tmp));
 	_entities.push_back(std::move(std::make_unique<ImmobileObject>(_shaders[0], _models[0], _textures[0])));
 

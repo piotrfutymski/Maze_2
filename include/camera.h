@@ -32,7 +32,7 @@ private:
 	float yaw = 0.0f;
 	float pitch = 0.0f;
 
-	float _speed = 10.0;
+	float _speed = 2.0;
 	float _sensivity = 0.1;
 
 	Texture& _icoTexture;
