@@ -170,6 +170,7 @@
     <None Include="data\shaders\f_camera_shader.glsl" />
     <None Include="data\shaders\v_base_shader.glsl" />
     <None Include="data\shaders\v_camera_shader.glsl" />
+    <None Include="data\shaders\f_light_src_shader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

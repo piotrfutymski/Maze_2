@@ -85,5 +85,6 @@
     <None Include="data\shaders\v_camera_shader.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
+    <None Include="data\shaders\f_light_src_shader.glsl" />
   </ItemGroup>
 </Project>
