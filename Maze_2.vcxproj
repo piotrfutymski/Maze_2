@@ -150,12 +150,14 @@
     <ClCompile Include="src\lodepng.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\maze.cpp" />
+    <ClCompile Include="src\modelFactory.cpp" />
     <ClCompile Include="src\shaderProgram.cpp" />
     <ClCompile Include="src\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\entity.h" />
+    <ClInclude Include="include\modelFactory.h" />
     <ClInclude Include="include\immobileObject.h" />
     <ClInclude Include="include\lodepng.h" />
     <ClInclude Include="include\maze.h" />

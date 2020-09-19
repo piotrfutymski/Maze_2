@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera(ShaderProgram& s, Texture& t):Entity(s), _icoTexture(t)
+Camera::Camera(ShaderProgram* s, Texture* t):Entity(s), _icoTexture(t)
 {
 	_icoBuffer = {
 		-0.02f, -0.02f, 0.0f, 0.0f,
@@ -10,6 +10,33 @@ Camera::Camera(ShaderProgram& s, Texture& t):Entity(s), _icoTexture(t)
 		0.02f, -0.02f, 1.0f, 0.0f,
 		0.02f, 0.02f, 1.0f, 1.0f
 	};
+
+	_allowed.resize(2048 * 2048);
+
+
+	_allowed[1024 + 2048 * 1024] = true;
+	_allowed[1025 + 2048 * 1024] = true;
+	_allowed[1026 + 2048 * 1024] = true;
+	_allowed[1027 + 2048 * 1024] = true;
+	_allowed[1028 + 2048 * 1024] = true;
+	_allowed[1029 + 2048 * 1024] = true;
+	_allowed[1030 + 2048 * 1024] = true;
+	_allowed[1031 + 2048 * 1024] = true;
+	_allowed[1032 + 2048 * 1024] = true;
+	_allowed[1033 + 2048 * 1024] = true;
+	_allowed[1034 + 2048 * 1024] = true;
+	_allowed[1035 + 2048 * 1024] = true;
+
+	_allowed[1034 + 2048 * 1025] = true;
+	_allowed[1034 + 2048 * 1026] = true;
+	_allowed[1034 + 2048 * 1027] = true;
+	_allowed[1034 + 2048 * 1028] = true;
+	_allowed[1034 + 2048 * 1029] = true;
+	_allowed[1034 + 2048 * 1030] = true;
+	_allowed[1034 + 2048 * 1031] = true;
+	_allowed[1034 + 2048 * 1032] = true;
+	_allowed[1034 + 2048 * 1033] = true;
+	_allowed[1034 + 2048 * 1034] = true;
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -38,8 +65,24 @@ void Camera::move(float t, Direction d)
 
 	auto dd = r * glm::vec4(_normal.x, _normal.y, _normal.z, 0.0f);
 
+	auto nposX = _pos.x + dd.x * t * _speed;
+	auto nposZ = _pos.z + dd.z * t * _speed;
+
+	if (!_allowed[nposX + 1024 + (int)(nposZ + 1024) * 2048])
+		return;
+
+	if (nposX - float(floor(nposX)) > 0.85 && !_allowed[nposX + 1 + 1024 + (int)(nposZ + 1024) * 2048])
+		return;
+	if (nposX - float(floor(nposX)) < 0.15&& !_allowed[nposX - 1 + 1024 + (int)(nposZ + 1024) * 2048])
+		return;
+	if (nposZ - float(floor(nposZ)) > 0.85 && !_allowed[nposX + 1024 + (int)(nposZ + 1 + 1024) * 2048])
+		return;
+	if (nposZ - float(floor(nposZ)) < 0.15 && !_allowed[nposX + 1024 + (int)(nposZ - 1 + 1024) * 2048])
+		return;
+
+
 	_pos.x += dd.x * t* _speed;
-	_pos.y += dd.y * t * _speed;
+	//_pos.y += dd.y * t * _speed;
 	_pos.z += dd.z * t * _speed;
 }
 
@@ -85,10 +128,10 @@ glm::mat4 Camera::getVMatrix()
 void Camera::draw(const glm::mat4& P, const glm::mat4& V)
 {
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, _icoTexture.get());
+	glBindTexture(GL_TEXTURE_2D, _icoTexture->get());
 
-	glUseProgram(_shaderProgram.getID());
-	glUniform1i(_shaderProgram.u("tex"), 0);
+	glUseProgram(_shaderProgram->getID());
+	glUniform1i(_shaderProgram->u("tex"), 0);
 	glBindVertexArray(VAO);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);

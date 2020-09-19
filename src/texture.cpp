@@ -23,7 +23,7 @@ Texture::Texture(const char* filename)
 
 Texture::~Texture()
 {
-   // glDeleteTextures(1, &id);
+    glDeleteTextures(1, &id);
 }
 
 GLuint Texture::get() const

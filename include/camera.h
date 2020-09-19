@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "entity.h"
 #include "texture.h"
+#include <map>
 
 class Camera : public Entity
 {
@@ -15,7 +16,7 @@ public:
 	enum class Direction{
 	Forward, Back, Left, Right};
 
-	Camera(ShaderProgram& s, Texture& t);
+	Camera(ShaderProgram* s, Texture* t);
 
 	void move(float t, Direction d);
 
@@ -25,7 +26,7 @@ public:
 
 private:
 
-	glm::vec3 _pos = { 10.0f, 0.0f, 4.0f};
+	glm::vec3 _pos = { 1.0f, 1.6f, 0.5f};
 	glm::vec3 _normal = {-1.0f, 0.0f, 0.0f};
 	glm::vec3 _head = { 0.0f, 1.0f, 0.0f};
 	glm::vec3 _up = { 0.0f, 1.0f, 0.0f };
@@ -35,10 +36,12 @@ private:
 	float _speed = 2.0;
 	float _sensivity = 0.1;
 
-	Texture& _icoTexture;
+	Texture* _icoTexture;
 	std::vector<float> _icoBuffer;
 
 	GLuint VBO, VAO;
+
+	std::vector<bool> _allowed;
 
 public:
 		// Odziedziczono za poœrednictwem elementu Entity
