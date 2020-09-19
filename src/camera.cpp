@@ -3,10 +3,10 @@
 Camera::Camera(ShaderProgram& s, Texture& t):Entity(s), _icoTexture(t)
 {
 	_icoBuffer = {
+		-0.02f, -0.02f, 0.0f, 0.0f,
 		-0.02f, 0.02f, 0.0f, 1.0f,
-		-0.02f, -0.02f, 0.0f, 0.0f,
 		0.02f, -0.02f, 1.0f, 0.0f,
-		-0.02f, -0.02f, 0.0f, 0.0f,
+		-0.02f, 0.02f, 0.0f, 1.0f,
 		0.02f, -0.02f, 1.0f, 0.0f,
 		0.02f, 0.02f, 1.0f, 1.0f
 	};
@@ -45,11 +45,41 @@ void Camera::move(float t, Direction d)
 
 void Camera::rotate(const glm::vec2& move)
 {
+	yaw -= move.x * _sensivity;
+	pitch -=move.y * _sensivity;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(-pitch));
+	direction.y = sin(glm::radians(-pitch));
+	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(-pitch));
+
+	_normal = glm::normalize(direction);
+	auto cameraRightCoords = glm::normalize(glm::cross(_normal, _up));  
+	_head = glm::normalize(glm::cross(cameraRightCoords, _normal));
+
+	/*auto I_ = glm::normalize(glm::cross(_normal, _head));
+	glm::mat4 r(1.0f);
+	r = glm::rotate(r, glm::radians(90.0f) * _sensivity * move.x, _head);
+	r = glm::rotate(r, glm::radians(90.0f) * _sensivity * move.y, I_);
+
+	auto nhead = r * glm::vec4(_head.x, _head.y, _head.z, 0.0f);
+	auto nNormal = r * glm::vec4(_normal.x, _normal.y, _normal.z, 0.0f);
+
+	auto J_ = _head;
+	auto K_ = -_normal;
+	_normal = glm::vec3(nNormal.x, nNormal.y, nNormal.z);
+	_head = glm::vec3(nhead.x, nhead.y, nhead.z);*/
+
 }
 
 glm::mat4 Camera::getVMatrix()
 {
-	return glm::lookAt(_pos, _pos + _normal, _head);
+	return glm::lookAt(_pos, _pos + _normal*100.0f, _head);
 }
 
 void Camera::draw(const glm::mat4& P, const glm::mat4& V)

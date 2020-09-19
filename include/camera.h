@@ -28,9 +28,12 @@ private:
 	glm::vec3 _pos = { 10.0f, 0.0f, 4.0f};
 	glm::vec3 _normal = {-1.0f, 0.0f, 0.0f};
 	glm::vec3 _head = { 0.0f, 1.0f, 0.0f};
+	glm::vec3 _up = { 0.0f, 1.0f, 0.0f };
+	float yaw = 0.0f;
+	float pitch = 0.0f;
 
 	float _speed = 10.0;
-	float _sensivity = 1.0;
+	float _sensivity = 0.1;
 
 	Texture& _icoTexture;
 	std::vector<float> _icoBuffer;

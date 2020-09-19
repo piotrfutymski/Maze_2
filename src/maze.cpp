@@ -63,6 +63,7 @@ bool Maze::initWindow()
 
 	glfwMakeContextCurrent(_window);
 	glfwSwapInterval(1); //Czekaj na 1 powrót plamki przed pokazaniem ukrytego bufora
+	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	//glfwSetKeyCallback(_window, key_callback);
 
 	return true;
@@ -73,6 +74,8 @@ bool Maze::loadShaders()
 {
 	glClearColor(0, 0, 0, 1); //Ustaw kolor czyszczenia bufora kolorów
 	glEnable(GL_DEPTH_TEST); //W³¹cz test g³êbokoœci na pikselach
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	_shaders.emplace_back("data/shaders/v_base_shader.glsl", "data/shaders/f_base_shader.glsl");
 	_shaders.emplace_back("data/shaders/v_camera_shader.glsl", "data/shaders/f_camera_shader.glsl");
 	return true;
@@ -104,8 +107,15 @@ void Maze::processInput()
 		_camera->move(glfwGetTime(), Camera::Direction::Left);
 	if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS)
 		_camera->move(glfwGetTime(), Camera::Direction::Right);
-	glfwSetTime(0); //Wyzeruj licznik czasu
 
+	double xpos, ypos;
+	glfwGetCursorPos(_window, &xpos, &ypos);
+	
+	_camera->rotate({ -(xpos - 1024/2), -(ypos-768/2) });
+
+
+	glfwSetTime(0); //Wyzeruj licznik czasu
+	glfwSetCursorPos(_window, 1024 / 2, 768 / 2);
 
 }
 
@@ -114,7 +124,7 @@ void Maze::renderWindow()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	for (auto& entity : _entities)
-		entity->draw(glm::perspective(90.0f * 3.14f / 180.0f, 1.0f, 0.2f, 50.0f), _camera->getVMatrix());
+		entity->draw(glm::perspective(50.0f * 3.14f / 180.0f, 1.0f, 0.2f, 50.0f), _camera->getVMatrix());
 
 	glfwSwapBuffers(_window);
 }
