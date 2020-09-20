@@ -8,17 +8,11 @@ struct LIGHT
     vec3 color;
 };
 
-/*in struct INTER
-{
-vec2 texCoords;
-vec3 pos;
-vec3 tanViewPos;
-vec3 tanPos;
-int lightCount;
-LIGHT tanLights[8];
-} inter;*/
-
 in vec2 texCoords;
+in vec3 pos;
+in vec3 tanViewPos;
+in vec3 tanPos;
+in mat3 TBN;
 
 uniform sampler2D diffuseMap;
 uniform sampler2D heightMap;
@@ -27,10 +21,10 @@ uniform sampler2D normalMap;
 
 void main()
 {
-    /*vec3 viewDirection = normalize(inter.tanViewPos - inter.tanPos);
-    float height =  texture(depthMap, inter.texCoords).r;    
-    vec2 offset = viewDirection.xy / viewDirection.z * (height * 0.5);    //0.5 reduces the parallax effect
-    vec2 newTexCoords = inter.texCoords - offset;  
+    vec3 viewDirection = normalize(tanViewPos - tanPos);
+    float height =  texture(heightMap, texCoords).r;    
+    vec2 offset = viewDirection.xy / viewDirection.z * (height * 0.5);
+    vec2 newTexCoords = texCoords + offset;  
 
     if(newTexCoords.x > 1.0 || newTexCoords.y > 1.0 || newTexCoords.x < 0.0 || newTexCoords.y < 0.0)
     discard;
@@ -39,7 +33,7 @@ void main()
     vec3 normal = texture(normalMap, newTexCoords).rgb;
     normal = normalize(normal * 2.0 - 1.0); //convert [0,1] space to [-1,1]
     
-    vec3 phongLight = vec3(0.1, 0.1, 0.1)*5; //ambient
+    /*vec3 phongLight = vec3(0.1, 0.1, 0.1)*5; //ambient
     for(int i = 0; i < inter.lightCount; i++)
     {
         vec3 lightDirection = normalize(inter.tanLights[i].pos - inter.tanPos);  
@@ -58,5 +52,5 @@ void main()
         
      }
      phongLight.rgb = vec3(min(phongLight.r,1.0), min(phongLight.g,1.0), min(phongLight.b,1.0));*/
-     fragColor = texture(diffuseMap, texCoords);
+     fragColor = vec4(color, 1.0);
 }  
