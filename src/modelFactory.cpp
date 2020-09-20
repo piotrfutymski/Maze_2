@@ -104,7 +104,7 @@ void ModelFactory::loadTextures()
 void ModelFactory::loadModels()
 {
 	auto tmp = std::make_unique<Model>();
-	tmp->loadMesh("data/models/unit.obj");
+	tmp->loadMesh("data/models/wall.obj");
 	_models.emplace("unit", std::move(tmp));
 }
 

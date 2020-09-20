@@ -27,9 +27,9 @@ uniform int lightCount;
 void main()
 {
     vec3 viewDirection = normalize(tanViewPos - tanPos);
-    float height =  texture(depthMap, texCoords).r;    
+    float height = 1 -  texture(depthMap, texCoords).r;    
     vec2 offset = viewDirection.xy / viewDirection.z * (height * 0.5);    //0.5 reduces the parallax effect
-    vec2 newTexCoords = texCoords;// - offset;  
+    vec2 newTexCoords = texCoords - offset;  
 
     if(newTexCoords.x > 1.0 || newTexCoords.y > 1.0 || newTexCoords.x < 0.0 || newTexCoords.y < 0.0)
     discard;
