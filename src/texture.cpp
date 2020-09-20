@@ -61,10 +61,6 @@ Texture::Texture(const char* filename)
         GL_RGBA, GL_UNSIGNED_BYTE, (unsigned char*)image.data());
 }
 
-Texture::~Texture()
-{
-    glDeleteTextures(1, &id);
-}
 
 GLuint Texture::get() const
 {

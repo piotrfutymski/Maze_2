@@ -22,7 +22,7 @@ public:
 
 	GLsizei count() const
 	{
-		return _mesh.size();
+		return _mesh.size()/ vertexAttrSize;
 	}
 
 	void loadMesh(std::string objPath, size_t iniAlloc=16000)
@@ -135,7 +135,23 @@ private:
 
 		int offs[3] = { off1,off2,off3 };
 		for (auto off : offs)
-			_mesh.emplace_back(pos[off], uv[off], nm[off], tan, btan);
+		{
+			_mesh.push_back(pos[off].x);
+			_mesh.push_back(pos[off].y);
+			_mesh.push_back(pos[off].z);
+			_mesh.push_back(uv[off].x);
+			_mesh.push_back(uv[off].y);
+			_mesh.push_back(nm[off].x);
+			_mesh.push_back(nm[off].y);
+			_mesh.push_back(nm[off].z);
+			_mesh.push_back(tan.x);
+			_mesh.push_back(tan.y);
+			_mesh.push_back(tan.z);
+			_mesh.push_back(btan.x);
+			_mesh.push_back(btan.y);
+			_mesh.push_back(btan.z);
+		}
+			
 	}
 
 	void sendToGpu()
@@ -164,18 +180,7 @@ private:
 
 	GLuint VBO, VAO;
 	const static int vertexAttrSize = 14;
-	struct vertexAttr
-	{
-		vertexAttr(const glm::vec3& pos, const glm::vec2& tex, const glm::vec3& nm, const glm::vec3& tan, const glm::vec3& btan)
-			:x(pos.x), y(pos.y), z(pos.z), tex_x(tex.x), tex_y(tex.y), nm_x(nm.x), nm_y(nm.y), nm_z(nm.z), tan_x(tan.x), tan_y(tan.y), tan_z(tan.z), 
-			btan_x(btan.x), btan_y(btan.y), btan_z(btan.z) {}
 
-		GLfloat x, y, z,
-			tex_x, tex_y,
-			nm_x, nm_y, nm_z,
-			tan_x, tan_y, tan_z,
-			btan_x, btan_y, btan_z;
-	};
 
-	std::vector<vertexAttr> _mesh;
+	std::vector<GLfloat> _mesh;
 };

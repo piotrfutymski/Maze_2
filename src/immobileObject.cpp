@@ -2,7 +2,6 @@
 
 void ImmobileObject::draw(const glm::mat4& P, const glm::mat4& V, const glm::vec3& cameraPos)
 {
-
 	glUseProgram(_shaderProgram->getID());
 
 	glActiveTexture(GL_TEXTURE0 );

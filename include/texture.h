@@ -12,7 +12,6 @@ class Texture
 public:
 
 	Texture(const char* filename);
-	~Texture();
 
 	GLuint get()const;
 
