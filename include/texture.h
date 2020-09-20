@@ -16,6 +16,7 @@ public:
 	GLuint get()const;
 
 private:
+
 	GLuint id;
 
 };

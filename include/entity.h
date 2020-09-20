@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
 #include "shaderProgram.h"
+#include "environment.h"
 
 class Entity
 {
@@ -14,10 +15,12 @@ public:
 
 	Entity(ShaderProgram* program);
 
-	virtual void draw(const glm::mat4 & P, const glm::mat4& V, const glm::vec3& cameraPos) = 0;
+	virtual void draw() = 0;
+
+	virtual void update(float dt) = 0;
 
 protected:
 
-	ShaderProgram* _shaderProgram;
+	ShaderProgram * _shaderProgram;
 
 };

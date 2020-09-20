@@ -145,25 +145,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\immobileObject.cpp" />
     <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\environment.cpp" />
     <ClCompile Include="src\lodepng.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\maze.cpp" />
-    <ClCompile Include="src\modelFactory.cpp" />
+    <ClCompile Include="src\model.cpp" />
+    <ClCompile Include="src\worldGenerator.cpp" />
+    <ClCompile Include="src\object.cpp" />
     <ClCompile Include="src\shaderProgram.cpp" />
     <ClCompile Include="src\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\entity.h" />
-    <ClInclude Include="include\modelFactory.h" />
-    <ClInclude Include="include\immobileObject.h" />
+    <ClInclude Include="include\environment.h" />
     <ClInclude Include="include\lodepng.h" />
     <ClInclude Include="include\maze.h" />
     <ClInclude Include="include\model.h" />
+    <ClInclude Include="include\object.h" />
     <ClInclude Include="include\shaderProgram.h" />
     <ClInclude Include="include\texture.h" />
+    <ClInclude Include="include\worldGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\f_base_shader.glsl" />

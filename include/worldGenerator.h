@@ -1,0 +1,37 @@
+#pragma once
+
+#include "entity.h"
+#include "object.h"
+#include "map"
+#include "camera.h"
+
+
+class WorldGenerator
+{
+public:
+
+	void init();
+
+	void load(const std::string & filename, std::vector<std::unique_ptr<Entity>>& e);
+
+
+private:
+
+	void buildBaseMazeElement(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
+	void buildSimplifiedMazeElement(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
+
+	void buildWall(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
+
+	std::map<std::string, std::unique_ptr<Model>> _models;
+	std::map<std::string, std::unique_ptr<Texture>> _textures;
+	std::map<std::string, std::unique_ptr<ShaderProgram>> _shaders;
+
+
+private:
+
+	void loadShaders();
+	void loadTextures();
+	void loadModels();
+
+
+};

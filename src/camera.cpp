@@ -11,33 +11,6 @@ Camera::Camera(ShaderProgram* s, Texture* t):Entity(s), _icoTexture(t)
 		0.02f, 0.02f, 1.0f, 1.0f
 	};
 
-	_allowed.resize(2048 * 2048);
-
-
-	_allowed[1024 + 2048 * 1024] = true;
-	_allowed[1025 + 2048 * 1024] = true;
-	_allowed[1026 + 2048 * 1024] = true;
-	_allowed[1027 + 2048 * 1024] = true;
-	_allowed[1028 + 2048 * 1024] = true;
-	_allowed[1029 + 2048 * 1024] = true;
-	_allowed[1030 + 2048 * 1024] = true;
-	_allowed[1031 + 2048 * 1024] = true;
-	_allowed[1032 + 2048 * 1024] = true;
-	_allowed[1033 + 2048 * 1024] = true;
-	_allowed[1034 + 2048 * 1024] = true;
-	_allowed[1035 + 2048 * 1024] = true;
-
-	_allowed[1034 + 2048 * 1025] = true;
-	_allowed[1034 + 2048 * 1026] = true;
-	_allowed[1034 + 2048 * 1027] = true;
-	_allowed[1034 + 2048 * 1028] = true;
-	_allowed[1034 + 2048 * 1029] = true;
-	_allowed[1034 + 2048 * 1030] = true;
-	_allowed[1034 + 2048 * 1031] = true;
-	_allowed[1034 + 2048 * 1032] = true;
-	_allowed[1034 + 2048 * 1033] = true;
-	_allowed[1034 + 2048 * 1034] = true;
-
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glBindVertexArray(VAO);
@@ -66,24 +39,40 @@ void Camera::move(float t, Direction d)
 	auto dd = r * glm::vec4(_normal.x, _normal.y, _normal.z, 0.0f);
 
 	auto nposX = _pos.x + dd.x * t * _speed;
+	auto nposY = _pos.y + dd.x * t * _speed;
 	auto nposZ = _pos.z + dd.z * t * _speed;
 
-	if (!_allowed[nposX + 1024 + (int)(nposZ + 1024) * 2048])
+	int area = int(Area::edge * _pos.x) + Area::mapSize / 2 +
+		(int(Area::edge * _pos.y) + Area::mapSize / 2) * Area::mapSize;
+
+	bool P1 = false, P2 = false, P3 = false, P4 = false;
+
+	if (Environment::height_map.find(area + 1) == Environment::height_map.end())
+		P1 = true;
+	if (Environment::height_map.find(area - 1) == Environment::height_map.end())
+		P2 = true;
+	if (Environment::height_map.find(area + Area::mapSize) == Environment::height_map.end())
+		P3 = true;
+	if (Environment::height_map.find(area - Area::mapSize) == Environment::height_map.end())
+		P4 = true;
+
+
+	if (nposX - float(floor(nposX)) > 0.90f && P1)
+		return;
+	if (nposX - float(floor(nposX)) < 0.1f && P2)
+		return;
+	if (nposZ - float(floor(nposZ)) > 0.90f && P3)
+		return;
+	if (nposZ - float(floor(nposZ)) < 0.1f && P4)
 		return;
 
-	if (nposX - float(floor(nposX)) > 0.85 && !_allowed[nposX + 1 + 1024 + (int)(nposZ + 1024) * 2048])
-		return;
-	if (nposX - float(floor(nposX)) < 0.15&& !_allowed[nposX - 1 + 1024 + (int)(nposZ + 1024) * 2048])
-		return;
-	if (nposZ - float(floor(nposZ)) > 0.85 && !_allowed[nposX + 1024 + (int)(nposZ + 1 + 1024) * 2048])
-		return;
-	if (nposZ - float(floor(nposZ)) < 0.15 && !_allowed[nposX + 1024 + (int)(nposZ - 1 + 1024) * 2048])
-		return;
 
+	if (Environment::height_map.find(area) == Environment::height_map.end())
+		_pos.y = nposY;
 
-	_pos.x += dd.x * t* _speed;
-	//_pos.y += dd.y * t * _speed;
-	_pos.z += dd.z * t * _speed;
+	_pos.x += nposX;
+	_pos.y = Environment::height_map[area].h;
+	_pos.z += nposZ;
 }
 
 void Camera::rotate(const glm::vec2& move)
@@ -105,34 +94,42 @@ void Camera::rotate(const glm::vec2& move)
 	auto cameraRightCoords = glm::normalize(glm::cross(_normal, _up));  
 	_head = glm::normalize(glm::cross(cameraRightCoords, _normal));
 
-	/*auto I_ = glm::normalize(glm::cross(_normal, _head));
-	glm::mat4 r(1.0f);
-	r = glm::rotate(r, glm::radians(90.0f) * _sensivity * move.x, _head);
-	r = glm::rotate(r, glm::radians(90.0f) * _sensivity * move.y, I_);
-
-	auto nhead = r * glm::vec4(_head.x, _head.y, _head.z, 0.0f);
-	auto nNormal = r * glm::vec4(_normal.x, _normal.y, _normal.z, 0.0f);
-
-	auto J_ = _head;
-	auto K_ = -_normal;
-	_normal = glm::vec3(nNormal.x, nNormal.y, nNormal.z);
-	_head = glm::vec3(nhead.x, nhead.y, nhead.z);*/
 
 }
 
-glm::mat4 Camera::getVMatrix()
-{
-	return glm::lookAt(_pos, _pos + _normal*100.0f, _head);
-}
 
-void Camera::draw(const glm::mat4& P, const glm::mat4& V, const glm::vec3& cameraPos)
+void Camera::draw()
 {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _icoTexture->get());
 
-	glUseProgram(_shaderProgram->getID());
+	glUseProgram(_shaderProgram->get());
 	glUniform1i(_shaderProgram->u("tex"), 0);
 	glBindVertexArray(VAO);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
+
+void Camera::update(float dt)
+{
+	if (glfwGetKey(Environment::window, GLFW_KEY_W) == GLFW_PRESS)
+		this->move(dt, Camera::Direction::Forward);
+	if (glfwGetKey(Environment::window, GLFW_KEY_S) == GLFW_PRESS)
+		this->move(dt, Camera::Direction::Back);
+	if (glfwGetKey(Environment::window, GLFW_KEY_A) == GLFW_PRESS)
+		this->move(dt, Camera::Direction::Left);
+	if (glfwGetKey(Environment::window, GLFW_KEY_D) == GLFW_PRESS)
+		this->move(dt, Camera::Direction::Right);
+
+	double xpos, ypos;
+	glfwGetCursorPos(Environment::window, &xpos, &ypos);
+
+	this->rotate({ -(xpos - 1024 / 2), -(ypos - 768 / 2) });
+
+	Environment::V = glm::lookAt(_pos, _pos + _normal * 100.0f, _head);
+	Environment::cameraPosition = _pos;
+
+	glfwSetCursorPos(Environment::window, 1024 / 2, 768 / 2);
+}
+
+

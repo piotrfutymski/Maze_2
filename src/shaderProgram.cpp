@@ -87,10 +87,11 @@ ShaderProgram::ShaderProgram(const char* vertex_file_path, const char* fragment_
 	_shaderProgramID = ProgramID;
 }
 
-GLuint ShaderProgram::getID() const
+GLuint ShaderProgram::get() const
 {
 	return _shaderProgramID;
 }
+
 
 //Pobierz numer slotu odpowiadaj¹cego zmiennej jednorodnej o nazwie variableName
 GLuint ShaderProgram::u(const char* variableName) {

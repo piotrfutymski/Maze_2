@@ -16,10 +16,10 @@ class ShaderProgram
 public:
 	ShaderProgram(const char* vertex_file_path, const char* fragment_file_path);
 
-	GLuint getID()const;
+	GLuint get()const;
 
-	GLuint u(const char* variableName); //Pobiera numer slotu zwi¹zanego z dan¹ zmienn¹ jednorodn¹
-	GLuint a(const char* variableName); //Pobiera numer slotu zwi¹zanego z danym atrybutem
+	GLuint u(const char* variableName);
+	GLuint a(const char* variableName); 
 
 private:
 
