@@ -22,18 +22,18 @@ public:
 
 	GLsizei count() const
 	{
-		return _mesh.size() / 8;
+		return _mesh.size() / vertexAttrSize;
 	}
 
-	void loadMesh(std::string objPath, size_t iniAlloc=32000)
+	void loadMesh(std::string objPath, size_t iniAlloc=16000)
 	{
-		std::vector<GLfloat> v;
-		std::vector<GLfloat> vt;
-		std::vector<GLfloat> vn;
+		std::vector<glm::vec3> v;
+		std::vector<glm::vec2> vt;
+		std::vector<glm::vec3> vn;
 		v.reserve(iniAlloc);
 		vt.reserve(iniAlloc);
 		vn.reserve(iniAlloc);
-		_mesh.reserve(iniAlloc*8);
+		_mesh.reserve(iniAlloc*3);
 
 		std::fstream file;
 		file.open(objPath, std::ios::in);
@@ -47,23 +47,18 @@ public:
 				if (data == "v")
 				{
 					file >> fx >> fy >> fz;
-					v.push_back(fx);
-					v.push_back(fy);
-					v.push_back(fz);
+					v.emplace_back(fx, fy, fz);
 				}
 				else if (data == "vt")
 				{
 					file >> fx >> fy;
-					vt.push_back(fx);
-					vt.push_back(fy);
+					vt.emplace_back(fx, fy);
 
 				}
 				else if (data == "vn")
 				{
 					file >> fx >> fy >> fz;
-					vn.push_back(fx);
-					vn.push_back(fy);
-					vn.push_back(fz);
+					vn.emplace_back(fx, fy, fz);
 				}
 				else if (data == "f")
 				{
@@ -81,7 +76,8 @@ public:
 	}
 
 private:
-	void processFace(std::string& line, std::vector<GLfloat>& v, std::vector<GLfloat>& vt, std::vector<GLfloat>& vn)
+
+	void processFace(std::string& line, std::vector<glm::vec3>& v, std::vector<glm::vec2>& vt, std::vector<glm::vec3>& vn)
 	{
 		int index;
 		std::stringstream s;
@@ -94,56 +90,53 @@ private:
 			temp.push_back(index);
 			s.ignore(1);
 		}
+		glm::vec3 tan, btan;
+		glm::vec3 pos[4];
+		glm::vec2 uv[4];
+		glm::vec3 nm[4];
 
-		if (temp.size() == 9)
+		int vCount = temp.size() / 3;
+		for (int i = 0; i < vCount; i++)
+			pos[i] = v[temp[i * 3] - 1];
+		for (int i = 0; i < vCount; i++)
+			uv[i] = v[temp[i * 3 + 1] - 1];
+		for (int i = 0; i < vCount; i++)
+			nm[i] = v[temp[i * 3 + 2] - 1];
+
+		if (vCount == 3)
+			addTriangle(0, 1, 2, pos, uv, nm);
+		else if (vCount == 4) //(need to split into two triangles [0,1,2] [0,2,3])
 		{
-			for (int i = 0; i < 9; i++)
-			{
-				if (i % 3 == 0)
-					for (int j = 0; j < 3; j++)
-						_mesh.push_back(v[(temp[i] - 1) * 3 + j]);
-				else if (i % 3 == 1)
-					for (int j = 0; j < 2; j++)
-						_mesh.push_back(vt[(temp[i] - 1) * 2 + j]);
-				else if (i % 3 == 2)
-					for (int j = 0; j < 3; j++)
-						_mesh.push_back(vn[(temp[i] - 1) * 3 + j]);
-			}
-		}
-		else
-		{
-			for (int i = 0; i < 9; i++)
-			{
-				if (i % 3 == 0)
-					for (int j = 0; j < 3; j++)
-						_mesh.push_back(v[(temp[i] - 1) * 3 + j]);
-				else if (i % 3 == 1)
-					for (int j = 0; j < 2; j++)
-						_mesh.push_back(vt[(temp[i] - 1) * 2 + j]);
-				else if (i % 3 == 2)
-					for (int j = 0; j < 3; j++)
-						_mesh.push_back(vn[(temp[i] - 1) * 3 + j]);
-
-
-			}
-			for (int i = 0; i < 12; i++)
-			{
-				if (i == 3)
-				{
-					i += 3;
-				}
-				if (i % 3 == 0)
-					for (int j = 0; j < 3; j++)
-						_mesh.push_back(v[(temp[i] - 1) * 3 + j]);
-				else if (i % 3 == 1)
-					for (int j = 0; j < 2; j++)
-						_mesh.push_back(vt[(temp[i] - 1) * 2 + j]);
-				else if (i % 3 == 2)
-					for (int j = 0; j < 3; j++)
-						_mesh.push_back(vn[(temp[i] - 1) * 3 + j]);
-			}
+			addTriangle(0, 1, 2, pos, uv, nm);
+			addTriangle(0, 2, 3, pos, uv, nm);
 		}
 
+	}
+
+	void addTriangle(int off1, int off2, int off3, const glm::vec3* pos, const glm::vec2* uv, const glm::vec3* nm)
+	{
+		glm::vec3 tan, btan;
+
+		glm::vec3 dpos1 = pos[off2] - pos[off1];
+		glm::vec3 dpos2 = pos[off3] - pos[off1];
+		glm::vec2 duv1 = uv[off2] - uv[off1];
+		glm::vec2 duv2 = uv[off3] - uv[off1];
+
+		float f = 1.0f / (duv1.x * duv2.y - duv2.x * duv1.y);
+
+		tan.x = f * (duv2.y * dpos1.x - duv1.y * dpos2.x);
+		tan.y = f * (duv2.y * dpos1.y - duv1.y * dpos2.y);
+		tan.z = f * (duv2.y * dpos1.z - duv1.y * dpos2.z);
+		tan = glm::normalize(tan);
+
+		btan.x = f * (-duv2.x * dpos1.x + duv1.x * dpos2.x);
+		btan.y = f * (-duv2.x * dpos1.y + duv1.x * dpos2.y);
+		btan.z = f * (-duv2.x * dpos1.z + duv1.x * dpos2.z);
+		btan = glm::normalize(btan);
+
+		int offs[3] = { off1,off2,off3 };
+		for (auto off : offs)
+			_mesh.emplace_back(pos[off], uv[off], nm[off], tan, btan);
 	}
 
 	void sendToGpu()
@@ -154,16 +147,36 @@ private:
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, _mesh.size()*sizeof(GLfloat), _mesh.data(), GL_STATIC_DRAW);
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vertexAttrSize * sizeof(GLfloat), (void*)0);
 		glEnableVertexAttribArray(0);
 
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, vertexAttrSize * sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
 		glEnableVertexAttribArray(1);
 
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(5*sizeof(GLfloat)));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, vertexAttrSize * sizeof(GLfloat), (void*)(5*sizeof(GLfloat)));
 		glEnableVertexAttribArray(2);
+
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, vertexAttrSize * sizeof(GLfloat), (void*)(8 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(3);
+
+		glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, vertexAttrSize * sizeof(GLfloat), (void*)(11 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(4);
 	}
 
 	GLuint VBO, VAO;
-	std::vector<GLfloat> _mesh;
+	const static int vertexAttrSize = 14;
+	struct vertexAttr
+	{
+		vertexAttr(const glm::vec3& pos, const glm::vec2& tex, const glm::vec3& nm, const glm::vec3& tan, const glm::vec3& btan)
+			:x(pos.x), y(pos.y), z(pos.z), tex_x(tex.x), tex_y(tex.y), nm_x(nm.x), nm_y(nm.y), nm_z(nm.z), tan_x(tan.x), tan_y(tan.y), tan_z(tan.z), 
+			btan_x(btan.x), btan_y(btan.y), btan_z(btan.z) {}
+
+		GLfloat x, y, z,
+			tex_x, tex_y,
+			nm_x, nm_y, nm_z,
+			tan_x, tan_y, tan_z,
+			btan_x, btan_y, btan_z;
+	};
+
+	std::vector<vertexAttr> _mesh;
 };
