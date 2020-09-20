@@ -125,7 +125,7 @@ glm::mat4 Camera::getVMatrix()
 	return glm::lookAt(_pos, _pos + _normal*100.0f, _head);
 }
 
-void Camera::draw(const glm::mat4& P, const glm::mat4& V)
+void Camera::draw(const glm::mat4& P, const glm::mat4& V, const glm::vec3& cameraPos)
 {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _icoTexture->get());

@@ -37,7 +37,7 @@ void main()
     vec3 normal = texture(normalMap, newTexCoords).rgb;
     normal = normalize(normal * 2.0 - 1.0); //convert [0,1] space to [-1,1]
     
-    vec3 phongLight = vec3(0.1, 0.1, 0.1); //ambient
+    vec3 phongLight = vec3(0.1, 0.1, 0.1)*5; //ambient
     for(int i = 0; i < inter.lightCount; i++)
     {
         vec3 lightDirection = normalize(inter.tanLights[i].pos - inter.tanPos);  
@@ -53,7 +53,8 @@ void main()
         vec3 specular = spec * inter.tanLights[i].color / dist;
 
         phongLight += (diffuse + specular);
+        
      }
-
-    fragColor = vec4(phongLight * color, 1.0);
+     phongLight.rgb = vec3(min(phongLight.r,1.0), min(phongLight.g,1.0), min(phongLight.b,1.0));
+     fragColor = vec4(color, 1.0);
 }  

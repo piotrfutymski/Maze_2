@@ -142,7 +142,7 @@ void Maze::renderWindow()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	for (auto& entity : _entities)
-		entity->draw(glm::perspective(50.0f * 3.14f / 180.0f, 1.0f, 0.1f, 50.0f), _camera->getVMatrix());
+		entity->draw(glm::perspective(50.0f * 3.14f / 180.0f, 1.0f, 0.1f, 50.0f), _camera->getVMatrix(), _camera->getPos());
 
 	glfwSwapBuffers(_window);
 }

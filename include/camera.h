@@ -45,6 +45,11 @@ private:
 
 public:
 		// Odziedziczono za poœrednictwem elementu Entity
-	virtual void draw(const glm::mat4& P, const glm::mat4& V) override;
+	virtual void draw(const glm::mat4& P, const glm::mat4& V, const glm::vec3& cameraPos) override;
+
+	glm::vec3 getPos()
+	{
+		return _pos;
+	}
 
 };

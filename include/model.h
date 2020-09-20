@@ -22,7 +22,7 @@ public:
 
 	GLsizei count() const
 	{
-		return _mesh.size() / vertexAttrSize;
+		return _mesh.size();
 	}
 
 	void loadMesh(std::string objPath, size_t iniAlloc=16000)
@@ -90,7 +90,6 @@ private:
 			temp.push_back(index);
 			s.ignore(1);
 		}
-		glm::vec3 tan, btan;
 		glm::vec3 pos[4];
 		glm::vec2 uv[4];
 		glm::vec3 nm[4];

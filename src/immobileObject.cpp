@@ -1,7 +1,9 @@
 #include "immobileObject.h"
 
-void ImmobileObject::draw(const glm::mat4& P, const glm::mat4& V)
+void ImmobileObject::draw(const glm::mat4& P, const glm::mat4& V, const glm::vec3& cameraPos)
 {
+
+	glUseProgram(_shaderProgram->getID());
 
 	glActiveTexture(GL_TEXTURE0 );
 	glBindTexture(GL_TEXTURE_2D, _txts[0].get());
@@ -15,13 +17,11 @@ void ImmobileObject::draw(const glm::mat4& P, const glm::mat4& V)
 	glBindTexture(GL_TEXTURE_2D, _txts[2].get());
 	glUniform1i(_shaderProgram->u("normalMap"), 2);
 
-	glUseProgram(_shaderProgram->getID());
+	glUniform3fv(_shaderProgram->u("viewPos"), 1, glm::value_ptr(cameraPos));
 
 	glUniformMatrix4fv(_shaderProgram->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(_shaderProgram->u("V"), 1, false, glm::value_ptr(V));
 	glUniformMatrix4fv(_shaderProgram->u("M"), 1, false, glm::value_ptr(_M));
-
-	glUniform1i(_shaderProgram->u("tex"), 0);
 
 	glBindVertexArray(_mod->get());
 

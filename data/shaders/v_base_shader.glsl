@@ -21,7 +21,7 @@ vec3 pos;
 vec3 tanViewPos;
 vec3 tanPos;
 int lightCount;
-LIGHT tanLights[64];
+LIGHT tanLights[8];
 } inter;
 
 //Zmienne jednorodne
@@ -35,7 +35,6 @@ uniform vec3 viewPos;
 void main() 
 {
     gl_Position = P * V * M * vec4(aVertex, 1.0);
-
     vec3 T = normalize(vec3(M * vec4(aTangent, 0.0)));
     vec3 B = normalize(vec3(M * vec4(aBitangent, 0.0)));
     vec3 N = normalize(vec3(M * vec4(aNormal, 0.0)));

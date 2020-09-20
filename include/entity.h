@@ -14,7 +14,7 @@ public:
 
 	Entity(ShaderProgram* program);
 
-	virtual void draw(const glm::mat4 & P, const glm::mat4& V) = 0;
+	virtual void draw(const glm::mat4 & P, const glm::mat4& V, const glm::vec3& cameraPos) = 0;
 
 protected:
 
