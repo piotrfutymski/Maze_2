@@ -20,7 +20,7 @@ void ModelFactory::build(const std::string& name, const glm::mat4& pos)
 {
 	for (auto& x : _elements[name])
 	{
-		auto mod = std::make_unique<ImmobileObject>(_shaders["base"].get(), x.m, x.t, pos* x.mat);
+		auto mod = std::make_unique<ImmobileObject>(_shaders["base"].get(), x.m, std::vector<Texture>({ *_textures["wall"].get(), *_textures["wall_h"].get(), *_textures["wall_n"].get() }), pos * x.mat);
 		_entities.push_back(std::move(mod));
 	}
 
@@ -96,6 +96,8 @@ void ModelFactory::loadShaders()
 void ModelFactory::loadTextures()
 {
 	_textures.emplace("wall", std::make_unique<Texture>("data/textures/wall.png"));
+	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/wall_height.png"));
+	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/wall_norm.png"));
 	_textures.emplace("camera_ico", std::make_unique<Texture>("data/textures/c_ico.png"));
 }
 
