@@ -20,7 +20,7 @@ void Environment::init(const std::string& filename)
 		else
 			for (int i = 0; i < 4; i++)
 				for (int j = 0; j < 4; j++)
-					height_map[x * 4 + Area::mapSize / 2 + j + (y + Area::mapSize / 2 + j) * 4 * Area::mapSize].h = h;
+					height_map[x * 4 + i + (Area::mapSize / 2)  + (y * 4 + j + (Area::mapSize / 2 ))  * Area::mapSize].h = h;
 
 	}
 	file.close();

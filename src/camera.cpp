@@ -42,8 +42,16 @@ void Camera::move(float t, Direction d)
 	auto nposY = _pos.y + dd.x * t * _speed;
 	auto nposZ = _pos.z + dd.z * t * _speed;
 
-	int area = int(Area::edge * _pos.x) + Area::mapSize / 2 +
-		(int(Area::edge * _pos.y) + Area::mapSize / 2) * Area::mapSize;
+	int area = (int(Area::edge * nposX) + Area::mapSize / 2) +
+		(int(Area::edge * nposZ) + Area::mapSize / 2) * Area::mapSize;
+
+	if (Environment::height_map.find(area) == Environment::height_map.end())
+	{
+		_pos.x = nposX;
+		_pos.z = nposZ;
+		_pos.y = nposY;
+		return;
+	}
 
 	bool P1 = false, P2 = false, P3 = false, P4 = false;
 
@@ -67,13 +75,11 @@ void Camera::move(float t, Direction d)
 		return;
 
 
-	if (Environment::height_map.find(area) == Environment::height_map.end())
-		_pos.y = nposY;
-
-	_pos.x += nposX;
 	_pos.y = Environment::height_map[area].h;
-	_pos.z += nposZ;
+	_pos.x = nposX;
+	_pos.z = nposZ;
 }
+	
 
 void Camera::rotate(const glm::vec2& move)
 {
