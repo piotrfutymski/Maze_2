@@ -107,14 +107,10 @@ void Model::addTriangle(int off1, int off2, int off3, const glm::vec3* pos, cons
 
 	float f = 1.0f / (duv1.x * duv2.y - duv2.x * duv1.y);
 
-	tan.x = f * (duv2.y * dpos1.x - duv1.y * dpos2.x);
-	tan.y = f * (duv2.y * dpos1.y - duv1.y * dpos2.y);
-	tan.z = f * (duv2.y * dpos1.z - duv1.y * dpos2.z);
-	tan = glm::normalize(tan);
+	tan = (dpos1 * duv2.y - dpos2 * duv1.y) * f;
+	btan = (dpos2 * duv1.x - dpos1 * duv2.x) * f;
 
-	btan.x = f * (-duv2.x * dpos1.x + duv1.x * dpos2.x);
-	btan.y = f * (-duv2.x * dpos1.y + duv1.x * dpos2.y);
-	btan.z = f * (-duv2.x * dpos1.z + duv1.x * dpos2.z);
+	tan = glm::normalize(tan);
 	btan = glm::normalize(btan);
 
 	int offs[3] = { off1,off2,off3 };
