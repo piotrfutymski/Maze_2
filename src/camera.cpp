@@ -136,8 +136,6 @@ void Camera::update(float dt)
 
 	Environment::V = glm::lookAt(_pos, _pos + _normal * 100.0f, _head);
 	Environment::cameraPosition = _pos;
-	Environment::cameraNormal = _normal;
-	Environment::cameraHead = _head;
 	glfwSetCursorPos(Environment::window, 1024 / 2, 768 / 2);
 }
 
