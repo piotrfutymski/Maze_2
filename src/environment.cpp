@@ -33,7 +33,7 @@ glm::mat4 Environment::V;
 glm::vec3 Environment::cameraPosition;
 
 Light Environment::lights[8];
-GLuint Environment::lightsCount;
+GLuint Environment::lightsCount=0;
 
 bool Environment::leaversStates;
 

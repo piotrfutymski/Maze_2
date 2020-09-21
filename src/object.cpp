@@ -30,7 +30,17 @@ void Object::draw()
 
 	glBindVertexArray(_mod->get());
 	
-	//TO DO - lights to shader!
+	glUniform1i(_shaderProgram->u("lightCount"), Environment::lightsCount);
+
+	std::string s = "lightPos[";
+	for (int i = 0; i < Environment::lightsCount; i++)
+		glUniform3fv(_shaderProgram->u(((s + (char)('0'+i))+']').c_str()), 1, glm::value_ptr(Environment::lights[i].position));
+
+	s = "lightColors[";
+	for (int i = 0; i < Environment::lightsCount; i++)
+		glUniform3fv(_shaderProgram->u(((s + (char)('0' + i)) + ']').c_str()), 1, glm::value_ptr(Environment::lights[i].position));
+
+	glUniform1i(_shaderProgram->u("lightCount"), Environment::lightsCount);
 
 	glDrawArrays(GL_TRIANGLES, 0, _mod->count());
 }

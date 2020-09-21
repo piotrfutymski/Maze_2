@@ -1,7 +1,11 @@
 #include "LightSrc.h"
 
-LightSrc::LightSrc(ShaderProgram* p, Model* m, glm::mat4 M)
-	: Entity(p), _mod(m), _M(M) {}
+LightSrc::LightSrc(ShaderProgram* p, Model* m, glm::mat4 M, glm::vec3& pos, glm::vec3& color)
+	: Entity(p), _mod(m), _M(M) 
+{
+	Environment::lights[Environment::lightsCount].position = pos;
+	Environment::lights[Environment::lightsCount++].color = color;
+}
 
 void LightSrc::draw()
 {

@@ -24,7 +24,9 @@ void WorldGenerator::load(const std::string& filename, std::vector<std::unique_p
 	{
 		glm::mat4 PO(1.0f);
 
-		PO = glm::translate(PO, glm::vec3(x, y, z));
+		glm::vec3 pos(x, y, z);
+
+		PO = glm::translate(PO, pos);
 		PO = glm::rotate(PO, glm::radians(angle), glm::vec3(0.0, 1.0, 0.0));
 
 		if (type == 0)
@@ -33,6 +35,8 @@ void WorldGenerator::load(const std::string& filename, std::vector<std::unique_p
 			this->buildWalls(PO, e, param);
 		if (type == 2)
 			this->buildStairs(PO, e);
+		if (type == 3)
+			this->buildLightSource(PO, pos, param, e);
 	}
 	file.close();
 }
@@ -80,6 +84,18 @@ void WorldGenerator::buildStairs(const glm::mat4& pos, std::vector<std::unique_p
 
 }
 
+void WorldGenerator::buildLightSource(const glm::mat4& M, glm::vec3& pos, int c, std::vector<std::unique_ptr<Entity>>& e)
+{
+	glm::vec3 color;
+	if (c == 0)
+		color = glm::vec3(0.5, 0.5, 1.0);
+
+	glm::mat4 tmpM(1.0f);
+	tmpM = glm::scale(tmpM, glm::vec3(0.01, 0.01, 0.01));
+
+	e.emplace_back(std::make_unique<LightSrc>(_shaders["light_src"].get(), _models["skull"].get(), M * tmpM, pos, color));
+}
+
 void WorldGenerator::buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
 	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), pos));
@@ -87,7 +103,7 @@ void WorldGenerator::buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr
 
 void WorldGenerator::buildFloorUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
-	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _models["unit"].get(), _textures["stone"].get(), _textures["stone"].get(), _textures["stone"].get(), pos));
+	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _models["unit"].get(), _textures["stone"].get(), _textures["stone_h"].get(), _textures["stone_n"].get(), pos));
 }
 
 void WorldGenerator::buildCailUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
@@ -109,12 +125,14 @@ void WorldGenerator::loadShaders()
 
 void WorldGenerator::loadTextures()
 {
-	_textures.emplace("wall", std::make_unique<Texture>("data/textures/wall.png"));
-	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/wall_height.png"));
-	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/wall_norm.png"));
 	_textures.emplace("camera_ico", std::make_unique<Texture>("data/textures/c_ico.png"));
 	_textures.emplace("skull", std::make_unique<Texture>("data/textures/skull.png"));
 	_textures.emplace("stone", std::make_unique<Texture>("data/textures/stone.png"));
+	_textures.emplace("stone_h", std::make_unique<Texture>("data/textures/stone_h.png"));
+	_textures.emplace("stone_n", std::make_unique<Texture>("data/textures/stone_n.png"));
+	_textures.emplace("wall", std::make_unique<Texture>("data/textures/wall.png"));
+	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/wall_h.png"));
+	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/wall_n.png"));
 	_textures.emplace("cail", std::make_unique<Texture>("data/textures/stoneCail.png"));
 }
 

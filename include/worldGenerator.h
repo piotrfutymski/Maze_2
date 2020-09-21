@@ -23,6 +23,7 @@ private:
 	void buildWalls(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int h);
 	void buildStairs(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 
+	void buildLightSource(const glm::mat4& M, glm::vec3& pos, int c, std::vector<std::unique_ptr<Entity>>& e);
 	void buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 	void buildFloorUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 	void buildCailUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
