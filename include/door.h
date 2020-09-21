@@ -12,7 +12,7 @@ private:
 
 	float H = 0;
 
-	float speed = 0.5;
+	float speed = 0.25;
 
 	glm::mat4 baseM;
 
