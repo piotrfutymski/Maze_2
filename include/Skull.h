@@ -5,17 +5,17 @@
 class Skull : public Object
 {
 public:
-	Skull(ShaderProgram* p, ShaderProgram* s, Model* m, Texture* td, Texture* th, Texture* tn, const glm::vec3 & pp, const glm::mat4& M = glm::mat4(1.0f));
+	Skull(ShaderProgram* p, ShaderProgram * s, Model* m, Texture* td, Texture* th, Texture* tn, const glm::vec3 & pp, int i, const glm::mat4& M = glm::mat4(1.0f));
 
 	virtual void update(float dt);
 
 private:
 
-	int state = 0;
+	int id;
 
 	float angle = 0;
 
-	float speed = 30;
+	float speed = 22.5;
 
 	glm::mat4 baseM;
 

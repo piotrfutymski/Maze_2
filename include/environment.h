@@ -29,15 +29,19 @@ public:
 
 	static void init(const std::string & filename);
 
+	static void loadHeights(const std::string& filename);
+	static void unloadHeights(const std::string& filename);
+
 	static glm::mat4 P;
 	static glm::mat4 V;
 
 	static glm::vec3 cameraPosition;
+	static glm::vec3 cameraNormal;
+
+	static int objectStates[5];
 
 	static Light lights[8];
 	static GLuint lightsCount;
-
-	static bool leaversStates;
 
 	static std::map<int, Area> height_map;
 

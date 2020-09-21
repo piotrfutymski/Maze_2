@@ -2,7 +2,13 @@
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (key == GLFW_KEY_F && action == GLFW_PRESS)
+	if (key == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+		Environment::F_Pressed = true;
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 		Environment::F_Pressed = true;
 }
 
@@ -60,6 +66,7 @@ bool Maze::initWindow()
 	glfwSwapInterval(1);
 	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetKeyCallback(_window, key_callback);
+	glfwSetMouseButtonCallback(_window, mouse_button_callback);
 
 	Environment::window = _window;
 	Environment::windowWidth = 1024;

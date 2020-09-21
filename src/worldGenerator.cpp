@@ -37,6 +37,10 @@ void WorldGenerator::load(const std::string& filename, std::vector<std::unique_p
 			this->buildStairs(PO, e);
 		if (type == 3)
 			this->buildLightSource(PO, pos, param, e);
+		if (type == 4)
+			this->buildSkull(pos, PO, e, param);
+		if (type == 5)
+			this->buildDoor(PO, e, param);
 	}
 	file.close();
 }
@@ -96,6 +100,20 @@ void WorldGenerator::buildLightSource(const glm::mat4& M, glm::vec3& pos, int c,
 	e.emplace_back(std::make_unique<LightSrc>(_shaders["light_src"].get(), _models["skull"].get(), M * tmpM, pos, color));
 }
 
+void WorldGenerator::buildSkull(const glm::vec3& p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int pa)
+{
+	glm::mat4 tmpM(1.0f);
+	tmpM = glm::translate(tmpM, glm::vec3(0, 0.1, 0));
+	tmpM = glm::rotate(tmpM, glm::radians(-90.0f), glm::vec3(1.0, 0, 0));
+	tmpM = glm::scale(tmpM, glm::vec3(0.01, 0.01, 0.01));
+	e.emplace_back(std::make_unique<Skull>(_shaders["base"].get(), _shaders["shadow"].get(), _models["skull"].get(), _textures["skull"].get(), _textures["skull"].get(), _textures["skull"].get(), p, pa, pos * tmpM));
+}
+
+void WorldGenerator::buildDoor(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int param)
+{
+	e.emplace_back(std::make_unique<Door>(_shaders["base"].get(), _shaders["shadow"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), param, pos));
+}
+
 void WorldGenerator::buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
 	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _shaders["shadow"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), pos));
@@ -109,11 +127,6 @@ void WorldGenerator::buildFloorUnit(const glm::mat4& pos, std::vector<std::uniqu
 void WorldGenerator::buildCailUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
 	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _shaders["shadow"].get(), _models["unit"].get(), _textures["cail"].get(), _textures["cail"].get(), _textures["cail"].get(), pos));
-}
-
-void WorldGenerator::buildSkull(const glm::vec3 & p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
-{
-	e.emplace_back(std::make_unique<Skull>(_shaders["base"].get(), _shaders["shadow"].get(), _models["skull"].get(), _textures["skull"].get(), _textures["skull"].get(), _textures["skull"].get(),p, pos));
 }
 
 void WorldGenerator::loadShaders()
