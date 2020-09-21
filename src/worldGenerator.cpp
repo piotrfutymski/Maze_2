@@ -30,7 +30,6 @@ void WorldGenerator::load(const std::string& filename, std::vector<std::unique_p
 			this->buildWallElement(glm::vec3(x+0.5, 1.6, z+0.5), PO, e);
 		else if (type == 1)
 			this->buildBaseMazeElement(glm::vec3(x + 0.5, 1.6, z + 0.5),PO, e);
-
 	}
 	file.close();
 }
@@ -84,6 +83,7 @@ void WorldGenerator::loadShaders()
 {
 	_shaders.emplace("base", std::make_unique<ShaderProgram>("data/shaders/v_base_shader.glsl", "data/shaders/f_base_shader.glsl"));
 	_shaders.emplace("camera", std::make_unique<ShaderProgram>("data/shaders/v_camera_shader.glsl", "data/shaders/f_camera_shader.glsl"));
+	_shaders.emplace("light_src", std::make_unique<ShaderProgram>("data/shaders/v_light_src_shader.glsl", "data/shaders/f_light_src_shader.glsl"));
 }
 
 void WorldGenerator::loadTextures()

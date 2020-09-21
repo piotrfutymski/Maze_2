@@ -3,13 +3,15 @@
 out vec4 fragColor;
 
 in vec2 texCoords;
-in vec3 pos;
 in vec3 tanViewPos;
 in vec3 tanPos;
+//in vec3 tanLightPos[8];
+//in int lightCount;
 
 uniform sampler2D diffuseMap;
 uniform sampler2D heightMap;
 uniform sampler2D normalMap;
+//uniform vec3 lightColors[8];
 
 void main()
 {

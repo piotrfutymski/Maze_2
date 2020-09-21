@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\lightSrc.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\environment.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\environment.h" />
+    <ClInclude Include="include\lightSrc.h" />
     <ClInclude Include="include\lodepng.h" />
     <ClInclude Include="include\maze.h" />
     <ClInclude Include="include\model.h" />
@@ -176,6 +178,7 @@
     <None Include="data\shaders\v_base_shader.glsl" />
     <None Include="data\shaders\v_camera_shader.glsl" />
     <None Include="data\shaders\f_light_src_shader.glsl" />
+    <None Include="data\shaders\v_light_src_shader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

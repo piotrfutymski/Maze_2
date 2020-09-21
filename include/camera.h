@@ -12,7 +12,6 @@
 class Camera : public Entity
 {
 public:
-
 	enum class Direction{
 	Forward, Back, Left, Right};
 

@@ -51,6 +51,9 @@
     <ClCompile Include="src\Skull.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="src\lightSrc.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\maze.h">
@@ -86,6 +89,9 @@
     <ClInclude Include="include\Skull.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="include\lightSrc.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\f_base_shader.glsl">
@@ -101,5 +107,6 @@
       <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="data\shaders\f_light_src_shader.glsl" />
+    <None Include="data\shaders\v_light_src_shader.glsl" />
   </ItemGroup>
 </Project>

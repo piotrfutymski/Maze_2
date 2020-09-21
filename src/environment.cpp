@@ -32,7 +32,7 @@ glm::mat4 Environment::V;
 
 glm::vec3 Environment::cameraPosition;
 
-Light Environment::lights[256];
+Light Environment::lights[8];
 GLuint Environment::lightsCount;
 
 bool Environment::leaversStates;
@@ -42,3 +42,4 @@ std::map<int, Area> Environment::height_map;
 GLFWwindow* Environment::window;
 
 bool Environment::F_Pressed;
+bool Environment::E_Pressed;

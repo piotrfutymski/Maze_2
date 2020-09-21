@@ -10,7 +10,6 @@ layout (location=4) in vec3 aBitangent;
 //Zmienne interpolowane
 
 out vec2 texCoords;
-out vec3 pos;
 out vec3 tanViewPos;
 out vec3 tanPos;
 
@@ -22,8 +21,7 @@ uniform vec3 viewPos;
 
 void main() 
 {
-    pos = vec3(M * vec4(aVertex, 1.0));
-    gl_Position = P * V * vec4(pos, 1.0);
+    gl_Position = P * V * M * vec4(aVertex, 1.0);
 
     vec3 T = normalize(vec3(M * vec4(aTangent, 0.0)));
     vec3 B = normalize(vec3(M * vec4(aBitangent, 0.0)));
@@ -33,5 +31,5 @@ void main()
     texCoords = aTexCoords;
 
     tanViewPos = TBN * viewPos;
-    tanPos = TBN * pos;
+    tanPos = TBN * vec3(M * vec4(aVertex, 1.0));
 }

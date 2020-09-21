@@ -32,7 +32,7 @@ public:
 
 	static glm::vec3 cameraPosition;
 
-	static Light lights[256];
+	static Light lights[8];
 	static GLuint lightsCount;
 
 	static bool leaversStates;
@@ -42,6 +42,7 @@ public:
 	static GLFWwindow* window;
 
 	static bool F_Pressed;
+	static bool E_Pressed;
 
 
 

@@ -5,6 +5,7 @@
 #include "map"
 #include "camera.h"
 #include "Skull.h"
+#include "lightSrc.h"
 
 
 class WorldGenerator
