@@ -20,7 +20,7 @@ void main()
     vec3 viewDirection = normalize(tanViewPos-tanPos);
     float depth = 1- texture(heightMap, texCoords).r;
     vec2 offset = viewDirection.xy * (depth*0.1);
-    vec2 shiftedTexCoords = texCoords -offset ;  
+    vec2 shiftedTexCoords = texCoords ; //no parallax atm 
 
     if(shiftedTexCoords.x > 1.0 || shiftedTexCoords.y > 1.0 || shiftedTexCoords.x < 0.0 || shiftedTexCoords.y < 0.0)
     discard;
@@ -29,7 +29,7 @@ void main()
     vec3 normal = texture(normalMap, shiftedTexCoords).rgb;
     normal = normalize(normal * 2.0 - 1.0);
     
-    vec3 phongLight = vec3(0.05, 0.1, 0.1);
+    vec3 phongLight = vec3(0.1, 0.1, 0.1);
     for(int i = 0; i < lightCount; i++)
     {
         vec3 tanLightPos = TBN*lightPos[i];
@@ -48,7 +48,6 @@ void main()
         phongLight += (diffuse + specular);
         
      }
-     //phongLight.rgb = vec3(min(phongLight.r,1.0), min(phongLight.g,1.0), min(phongLight.b,1.0));
 
      fragColor = vec4(phongLight*color, 1.0);
 }  
