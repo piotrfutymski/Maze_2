@@ -5,6 +5,9 @@ void Environment::init(const std::string& filename)
 	P = glm::perspective(60.0f * 3.14f / 180.0f, 1.0f, 0.08f, 50.0f);
 
 	Environment::loadHeights(filename);
+
+	//Creating Depth FBO for shadowMapping
+	glGenFramebuffers(1, &depthMapFBO);
 }
 
 void Environment::loadHeights(const std::string& filename)
@@ -49,9 +52,6 @@ void Environment::unloadHeights(const std::string& filename)
 
 	}
 	file.close();
-
-	//Creating Depth FBO for shadowMapping
-	glGenFramebuffers(1, &depthMapFBO);
 }
 
 
