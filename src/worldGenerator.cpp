@@ -81,9 +81,9 @@ void WorldGenerator::loadShaders()
 
 void WorldGenerator::loadTextures()
 {
-	_textures.emplace("wall", std::make_unique<Texture>("data/textures/wall.png"));
-	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/wall_height.png"));
-	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/wall_norm.png"));
+	_textures.emplace("wall", std::make_unique<Texture>("data/textures/bricks_d.png"));
+	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/bricks_h.png"));
+	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/bricks_n.png"));
 	_textures.emplace("camera_ico", std::make_unique<Texture>("data/textures/c_ico.png"));
 }
 

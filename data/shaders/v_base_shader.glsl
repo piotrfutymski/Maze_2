@@ -22,15 +22,16 @@ uniform vec3 viewPos;
 
 void main() 
 {
-    gl_Position = P * V * M * vec4(aVertex, 1.0);
-    vec3 T = normalize(mat3(M) * aTangent);
-    vec3 B = normalize(mat3(M) * aBitangent);
-    vec3 N = normalize(mat3(M) * aNormal);
+    pos = vec3(M * vec4(aVertex, 1.0));
+    gl_Position = P * V * vec4(pos, 1.0);
+
+    vec3 T = normalize(vec3(M * vec4(aTangent, 0.0)));
+    vec3 B = normalize(vec3(M * vec4(aBitangent, 0.0)));
+    vec3 N = normalize(vec3(M * vec4(aNormal, 0.0)));
     mat3 TBN = transpose(mat3(T, B, N));
 
     texCoords = aTexCoords;
-    pos = vec3(M * vec4(aVertex, 1.0));
 
-    tanViewPos = TBN *  viewPos;
+    tanViewPos = TBN * viewPos;
     tanPos = TBN * pos;
 }

@@ -82,9 +82,9 @@ void Model::processFace(std::string& line, std::vector<glm::vec3>& v, std::vecto
 	for (int i = 0; i < vCount; i++)
 		pos[i] = v[temp[i * 3] - 1];
 	for (int i = 0; i < vCount; i++)
-		uv[i] = v[temp[i * 3 + 1] - 1];
+		uv[i] = vt[temp[i * 3 + 1] - 1];
 	for (int i = 0; i < vCount; i++)
-		nm[i] = v[temp[i * 3 + 2] - 1];
+		nm[i] = vn[temp[i * 3 + 2] - 1];
 
 	if (vCount == 3)
 		addTriangle(0, 1, 2, pos, uv, nm);
