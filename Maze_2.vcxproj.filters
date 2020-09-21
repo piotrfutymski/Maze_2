@@ -54,7 +54,7 @@
     <ClCompile Include="src\lightSrc.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="include\door.cpp">
+    <ClCompile Include="src\door.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>

@@ -144,7 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="include\door.cpp" />
+    <ClCompile Include="src\door.cpp" />
     <ClCompile Include="src\lightSrc.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\entity.cpp" />
