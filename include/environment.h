@@ -41,6 +41,8 @@ public:
 
 	static GLFWwindow* window;
 
+	static bool F_Pressed;
+
 
 
 };

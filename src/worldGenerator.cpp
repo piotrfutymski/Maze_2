@@ -27,15 +27,15 @@ void WorldGenerator::load(const std::string& filename, std::vector<std::unique_p
 		PO = glm::rotate(PO, glm::radians(angle), glm::vec3(0.0, 1.0, 0.0));
 
 		if (type == 0)
-			this->buildSimplifiedMazeElement(PO, e);
+			this->buildWallElement(glm::vec3(x+0.5, 1.6, z+0.5), PO, e);
 		else if (type == 1)
-			this->buildBaseMazeElement(PO, e);
+			this->buildBaseMazeElement(glm::vec3(x + 0.5, 1.6, z + 0.5),PO, e);
 
 	}
 	file.close();
 }
 
-void WorldGenerator::buildBaseMazeElement(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
+void WorldGenerator::buildBaseMazeElement(const glm::vec3 & p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
 	glm::mat4 tmpM(1.0f);
 	this->buildWall(pos * tmpM, e);
@@ -54,24 +54,19 @@ void WorldGenerator::buildBaseMazeElement(const glm::mat4& pos, std::vector<std:
 	this->buildWall(pos * tmpM, e);
 
 	tmpM = glm::mat4{ 1.0f };
-	tmpM = glm::translate(tmpM, glm::vec3(0.5, 1.0, 0.5));
+	tmpM = glm::translate(tmpM, glm::vec3(0.5, 1.4, 0));
 	tmpM = glm::scale(tmpM, glm::vec3(0.01, 0.01, 0.01));
 	tmpM = glm::rotate(tmpM, glm::radians(-90.0f), glm::vec3(0.0, 0, 1.0));
 	tmpM = glm::rotate(tmpM, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
-	this->buildSkull(pos * tmpM, e);
+	tmpM = glm::rotate(tmpM, glm::radians(90.0f), glm::vec3(0.0, 0, 1.0));
+	this->buildSkull(glm::vec3(p.x, p.y, p.z),pos * tmpM, e);
 }
 
-void WorldGenerator::buildSimplifiedMazeElement(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
+void WorldGenerator::buildWallElement(const glm::vec3& p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
 	glm::mat4 tmpM(1.0f);
 	this->buildWall(pos * tmpM, e);
 	tmpM = glm::translate(tmpM, glm::vec3(0, 1.0, 0));
-	this->buildWall(pos * tmpM, e);
-	tmpM = glm::translate(tmpM, glm::vec3(0, 1.0, 0));
-	tmpM = glm::rotate(tmpM, glm::radians(90.0f), glm::vec3(1.0, 0, 0));
-	this->buildWall(pos * tmpM, e);
-	tmpM = glm::mat4{ 1.0f };
-	tmpM = glm::rotate(tmpM, glm::radians(90.0f), glm::vec3(1.0, 0, 0));
 	this->buildWall(pos * tmpM, e);
 }
 
@@ -80,9 +75,9 @@ void WorldGenerator::buildWall(const glm::mat4& pos, std::vector<std::unique_ptr
 	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), pos));
 }
 
-void WorldGenerator::buildSkull(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
+void WorldGenerator::buildSkull(const glm::vec3 & p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
-	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _models["skull"].get(), _textures["skull"].get(), _textures["skull"].get(), _textures["skull"].get(), pos));
+	e.emplace_back(std::make_unique<Skull>(_shaders["base"].get(), _models["skull"].get(), _textures["skull"].get(), _textures["skull"].get(), _textures["skull"].get(),p, pos));
 }
 
 void WorldGenerator::loadShaders()

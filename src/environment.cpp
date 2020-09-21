@@ -40,3 +40,5 @@ bool Environment::leaversStates;
 std::map<int, Area> Environment::height_map;
 
 GLFWwindow* Environment::window;
+
+bool Environment::F_Pressed;

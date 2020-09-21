@@ -18,10 +18,10 @@ void main()
     vec2 offset = viewDirection.xy * (depth*0.05);
     vec2 shiftedTexCoords = texCoords - offset;  
 
-    if(shiftedTexCoords.x > 1.0 || shiftedTexCoords.y > 1.0 || shiftedTexCoords.x < 0.0 || shiftedTexCoords.y < 0.0)
-    discard;
+    //if(shiftedTexCoords.x > 1.0 || shiftedTexCoords.y > 1.0 || shiftedTexCoords.x < 0.0 || shiftedTexCoords.y < 0.0)
+    //discard;
 
-    vec3 color = texture(diffuseMap, shiftedTexCoords).rgb;
+    vec3 color = texture(diffuseMap, texCoords).rgb;
     vec3 normal = texture(normalMap, shiftedTexCoords).rgb;
     normal = normalize(normal * 2.0 - 1.0);
     

@@ -151,6 +151,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\maze.cpp" />
     <ClCompile Include="src\model.cpp" />
+    <ClCompile Include="src\Skull.cpp" />
     <ClCompile Include="src\worldGenerator.cpp" />
     <ClCompile Include="src\object.cpp" />
     <ClCompile Include="src\shaderProgram.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="include\model.h" />
     <ClInclude Include="include\object.h" />
     <ClInclude Include="include\shaderProgram.h" />
+    <ClInclude Include="include\Skull.h" />
     <ClInclude Include="include\texture.h" />
     <ClInclude Include="include\worldGenerator.h" />
   </ItemGroup>

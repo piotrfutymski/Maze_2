@@ -1,5 +1,10 @@
 #include "maze.h"
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_F && action == GLFW_PRESS)
+		Environment::F_Pressed = true;
+}
 
 int Maze::play()
 {
@@ -12,6 +17,7 @@ int Maze::play()
 	{
 		this->processInput();
 		this->renderWindow();
+		Environment::F_Pressed = false;
 		glfwPollEvents();
 	}
 
@@ -52,6 +58,7 @@ bool Maze::initWindow()
 	glfwMakeContextCurrent(_window);
 	glfwSwapInterval(1);
 	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetKeyCallback(_window, key_callback);
 
 	Environment::window = _window;
 
