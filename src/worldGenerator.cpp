@@ -52,6 +52,13 @@ void WorldGenerator::buildBaseMazeElement(const glm::mat4& pos, std::vector<std:
 	this->buildWall(pos * tmpM, e);
 	tmpM = glm::translate(tmpM, glm::vec3(0, 1.0, 0));
 	this->buildWall(pos * tmpM, e);
+
+	tmpM = glm::mat4{ 1.0f };
+	tmpM = glm::translate(tmpM, glm::vec3(0.5, 1.0, 0.5));
+	tmpM = glm::scale(tmpM, glm::vec3(0.01, 0.01, 0.01));
+	tmpM = glm::rotate(tmpM, glm::radians(-90.0f), glm::vec3(0.0, 0, 1.0));
+	tmpM = glm::rotate(tmpM, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+	this->buildSkull(pos * tmpM, e);
 }
 
 void WorldGenerator::buildSimplifiedMazeElement(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
@@ -73,6 +80,11 @@ void WorldGenerator::buildWall(const glm::mat4& pos, std::vector<std::unique_ptr
 	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), pos));
 }
 
+void WorldGenerator::buildSkull(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
+{
+	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _models["skull"].get(), _textures["skull"].get(), _textures["skull"].get(), _textures["skull"].get(), pos));
+}
+
 void WorldGenerator::loadShaders()
 {
 	_shaders.emplace("base", std::make_unique<ShaderProgram>("data/shaders/v_base_shader.glsl", "data/shaders/f_base_shader.glsl"));
@@ -81,13 +93,15 @@ void WorldGenerator::loadShaders()
 
 void WorldGenerator::loadTextures()
 {
-	_textures.emplace("wall", std::make_unique<Texture>("data/textures/bricks_d.png"));
-	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/bricks_h.png"));
-	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/bricks_n.png"));
+	_textures.emplace("wall", std::make_unique<Texture>("data/textures/wall.png"));
+	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/wall_height.png"));
+	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/wall_norm.png"));
 	_textures.emplace("camera_ico", std::make_unique<Texture>("data/textures/c_ico.png"));
+	_textures.emplace("skull", std::make_unique<Texture>("data/textures/skull.png"));
 }
 
 void WorldGenerator::loadModels()
 {
 	_models.emplace("unit", std::make_unique<Model>("data/models/unit.obj"));
+	_models.emplace("skull", std::make_unique <Model>("data/models/skull.obj"));
 }

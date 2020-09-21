@@ -21,6 +21,7 @@ private:
 	void buildSimplifiedMazeElement(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 
 	void buildWall(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
+	void buildSkull(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 
 	std::map<std::string, std::unique_ptr<Model>> _models;
 	std::map<std::string, std::unique_ptr<Texture>> _textures;
