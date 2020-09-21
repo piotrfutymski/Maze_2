@@ -18,10 +18,13 @@ public:
 
 private:
 
-	void buildBaseMazeElement(const glm::vec3& p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
-	void buildWallElement(const glm::vec3& p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
+	void buildRoofFloor(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int h);
+	void buildWalls(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int h);
+	void buildStairs(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 
-	void buildWall(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
+	void buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
+	void buildFloorUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
+	void buildCailUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 	void buildSkull(const glm::vec3& p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 
 	std::map<std::string, std::unique_ptr<Model>> _models;

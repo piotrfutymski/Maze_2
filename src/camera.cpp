@@ -39,17 +39,17 @@ void Camera::move(float t, Direction d)
 	auto dd = r * glm::vec4(_normal.x, _normal.y, _normal.z, 0.0f);
 
 	auto nposX = _pos.x + dd.x * t * _speed;
-	auto nposY = _pos.y + dd.x * t * _speed;
+	auto nposY = _pos.y + dd.y * t * _speed;
 	auto nposZ = _pos.z + dd.z * t * _speed;
 
-	int area = (int(Area::edge * nposX) + Area::mapSize / 2) +
-		(int(Area::edge * nposZ) + Area::mapSize / 2) * Area::mapSize;
+	int oldArea = (floor(Area::edge *_pos.x) + Area::mapSize / 2) +
+		(floor(Area::edge * _pos.z) + Area::mapSize / 2) * Area::mapSize;
+
+	int area = (floor(Area::edge * nposX) + Area::mapSize / 2) +
+		(floor(Area::edge * nposZ) + Area::mapSize / 2) * Area::mapSize;
 
 	if (Environment::height_map.find(area) == Environment::height_map.end())
 	{
-		_pos.x = nposX;
-		_pos.z = nposZ;
-		_pos.y = nposY;
 		return;
 	}
 
@@ -74,6 +74,8 @@ void Camera::move(float t, Direction d)
 	if (nposZ - float(floor(nposZ)) < 0.1f && P4)
 		return;
 
+	if (Environment::height_map[area].h > 0.9 + Environment::height_map[oldArea].h)
+		return;
 
 	_pos.y = Environment::height_map[area].h;
 	_pos.x = nposX;
