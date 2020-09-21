@@ -61,6 +61,9 @@ bool Maze::initWindow()
 	glfwSetKeyCallback(_window, key_callback);
 
 	Environment::window = _window;
+	Environment::windowWidth = 1024;
+	Environment::windowHeight = 768;
+
 
 	return true;
 }

@@ -40,7 +40,7 @@ void main()
         float t_distance = (1 / dist) * (1 / dist);
     
         float diff = max(dot(normal, lightDirection), 0.0);
-        float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), 2);
+        float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), 128);
     
         vec3 diffuse = lightColors[i] * diff * t_distance;
         vec3 specular = spec * lightColors[i] / dist;

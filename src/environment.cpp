@@ -43,3 +43,5 @@ GLFWwindow* Environment::window;
 
 bool Environment::F_Pressed;
 bool Environment::E_Pressed;
+
+unsigned int Environment::windowWidth, Environment::windowHeight;

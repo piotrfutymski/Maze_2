@@ -40,6 +40,7 @@ public:
 	static std::map<int, Area> height_map;
 
 	static GLFWwindow* window;
+	static unsigned int windowWidth, windowHeight;
 
 	static bool F_Pressed;
 	static bool E_Pressed;

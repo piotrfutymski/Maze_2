@@ -14,4 +14,6 @@ public:
 private:
 	Model* _mod;
 	glm::mat4 _M;
+
+	static const unsigned int SHADOW_MAP_WIDTH = 2048, SHADOW_MAP_HEIGHT = 2048;
 };
