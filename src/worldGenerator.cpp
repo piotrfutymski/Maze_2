@@ -49,8 +49,13 @@ void WorldGenerator::buildRoofFloor(const glm::mat4& pos, std::vector<std::uniqu
 {
 	glm::mat4 tmpM(1.0f);
 
-	tmpM = glm::rotate(tmpM, glm::radians(90.0f), glm::vec3(1.0, 0, 0));
+	tmpM = glm::translate(tmpM, glm::vec3(0.f, 0.f, 1.f));
+
+	tmpM = glm::rotate(tmpM, glm::radians(-90.0f), glm::vec3(1.0, 0, 0));
 	this->buildFloorUnit(pos * tmpM, e);
+
+	tmpM=glm::mat4(1.0f);
+	tmpM = glm::rotate(tmpM, glm::radians(90.0f), glm::vec3(1.0, 0, 0));
 
 	tmpM = glm::translate( tmpM, glm::vec3(0, 0, -h) );
 	this->buildCailUnit(pos * tmpM, e);

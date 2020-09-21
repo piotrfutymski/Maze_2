@@ -4,6 +4,7 @@
 Object::Object(ShaderProgram* p, ShaderProgram* s, Model* m, Texture* td, Texture* th, Texture* tn, const glm::mat4& M)
 	:Entity(p,s), _mod(m), _diffMap(td), _heightMap(th), _normMap(tn), _M(M)
 {
+	_M = glm::scale(_M, glm::vec3(1.04,1.04,1.04));
 }
 
 void Object::shadow(glm::mat4& lightSpaceMatrix)

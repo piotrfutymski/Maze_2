@@ -24,7 +24,7 @@ void main()
     vec3 viewDirection = normalize(tanViewPos-tanPos);
     float depth = 1- texture(heightMap, texCoords).r;
     vec2 offset = viewDirection.xy * (depth*0.1);
-    vec2 shiftedTexCoords = texCoords ; //no parallax atm 
+    vec2 shiftedTexCoords = texCoords - offset ; //no parallax atm 
 
     if(shiftedTexCoords.x > 1.0 || shiftedTexCoords.y > 1.0 || shiftedTexCoords.x < 0.0 || shiftedTexCoords.y < 0.0)
     discard;
