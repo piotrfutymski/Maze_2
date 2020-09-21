@@ -111,9 +111,7 @@ void WorldGenerator::buildSkull(const glm::vec3& p, const glm::mat4& pos, std::v
 
 void WorldGenerator::buildDoor(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int param)
 {
-	glm::mat4 tmpM(1.0f);
-	tmpM = glm::scale(tmpM, glm::vec3(1, 2, 1));
-	e.emplace_back(std::make_unique<Door>(_shaders["base"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), param, pos * tmpM));
+	e.emplace_back(std::make_unique<Door>(_shaders["base"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), param, pos));
 }
 
 void WorldGenerator::buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)

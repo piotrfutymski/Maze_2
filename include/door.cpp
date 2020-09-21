@@ -3,6 +3,17 @@
 Door::Door(ShaderProgram* p, Model* m, Texture* td, Texture* th, Texture* tn, int i, const glm::mat4& M)
 	:Object(p, m, td, th, tn, M), baseM(M), id(i)
 {
+	glm::mat4 tmpM(1.0f);
+	if (id == 0)
+	{
+		tmpM = glm::scale(tmpM, glm::vec3(1, 2, 1));
+	}
+	if (id == 1)
+	{
+		tmpM = glm::scale(tmpM, glm::vec3(5, 1, 1));
+	}
+
+	baseM = baseM * tmpM;
 }
 
 void Door::update(float dt)

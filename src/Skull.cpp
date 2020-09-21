@@ -9,7 +9,7 @@ void Skull::update(float dt)
 {
 	auto f = glm::normalize(_pos - Environment::cameraPosition);
 
-	if (Environment::F_Pressed && glm::distance(_pos, Environment::cameraPosition) < 2.5 && glm::dot(f, Environment::cameraNormal) > 0.9)
+	if (Environment::F_Pressed && glm::distance(_pos, Environment::cameraPosition) < 2.5 && glm::dot(f, Environment::cameraNormal) > 0.98)
 	{
 		if (Environment::objectStates[id] == 0)
 			Environment::objectStates[id] = 1;

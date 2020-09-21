@@ -36,7 +36,7 @@ public:
 	static glm::vec3 cameraPosition;
 	static glm::vec3 cameraNormal;
 
-	static int objectStates[3];
+	static int objectStates[5];
 
 	static Light lights[8];
 	static GLuint lightsCount;
