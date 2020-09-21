@@ -33,7 +33,7 @@ void main()
     vec3 normal = texture(normalMap, shiftedTexCoords).rgb;
     normal = normalize(normal * 2.0 - 1.0);
     
-    vec3 phongLight = vec3(0.05, 0.05, 0.05);
+    vec3 phongLight = vec3(0.1, 0.1, 0.1);
     for(int i = 0; i < lightCount; i++)
     {
         vec3 tanLightPos = TBN*lightPos[i];
@@ -46,7 +46,7 @@ void main()
 
         float closestDepth = texture(sMap[i], projCoords.xy).r;
         float currentDepth = projCoords.z; 
-        if(currentDepth -0.001 <= closestDepth) //if there is nothing on the way we can apply light 
+        if(currentDepth - 0.001 <= closestDepth) //if there is nothing on the way we can apply light 
         { 
         vec3 reflectDirection = reflect(-lightDirection, normal);
 

@@ -1,7 +1,7 @@
 #include "door.h"
 
-Door::Door(ShaderProgram* p, Model* m, Texture* td, Texture* th, Texture* tn, int i, const glm::mat4& M)
-	:Object(p, m, td, th, tn, M), baseM(M), id(i)
+Door::Door(ShaderProgram* p, ShaderProgram* s, Model* m, Texture* td, Texture* th, Texture* tn, int i, const glm::mat4& M)
+	:Object(p, s, m, td, th, tn, M), baseM(M), id(i)
 {
 	glm::mat4 tmpM(1.0f);
 	if (id == 0)

@@ -1,6 +1,6 @@
 #include "..\include\Skull.h"
 
-Skull::Skull(ShaderProgram* p, Model* m, Texture* td, Texture* th, Texture* tn, const glm::vec3& pp, int i, const glm::mat4& M)
+Skull::Skull(ShaderProgram* p, ShaderProgram* s, Model* m, Texture* td, Texture* th, Texture* tn, const glm::vec3& pp, int i, const glm::mat4& M)
 	:Object(p, s, m, td, th, tn, M), _pos(pp), baseM(M), id(i)
 {
 }
