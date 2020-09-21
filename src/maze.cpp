@@ -16,6 +16,7 @@ int Maze::play()
 	while (!glfwWindowShouldClose(_window))
 	{
 		this->processInput();
+		this->shadow();
 		this->renderWindow();
 		Environment::F_Pressed = false;
 		glfwPollEvents();
@@ -92,6 +93,25 @@ void Maze::processInput()
 		entity->update(glfwGetTime());
 
 	glfwSetTime(0); 
+}
+
+void Maze::shadow()
+{
+	glViewport(0, 0, Environment::smapWidth, Environment::smapHeight); //change res
+	glBindFramebuffer(GL_FRAMEBUFFER, Environment::depthMapFBO);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+
+	for (int i = 0; i < Environment::lightsCount; i++)
+	{
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, Environment::lights[i].depthMap , 0); //attach depth texture to depth FBO depth buffer
+		glClear(GL_DEPTH_BUFFER_BIT);
+		for (auto& entity : _entities)
+			entity->shadow(Environment::lights[i].lightSpaceMatrix);
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0); //reset framebuffer to default
+	glViewport(0, 0, Environment::windowWidth, Environment::windowHeight); //reset viewport
 }
 
 void Maze::renderWindow()

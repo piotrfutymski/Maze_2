@@ -24,6 +24,9 @@ void Environment::init(const std::string& filename)
 
 	}
 	file.close();
+
+	//Creating Depth FBO for shadowMapping
+	glGenFramebuffers(1, &depthMapFBO);
 }
 
 
@@ -45,3 +48,5 @@ bool Environment::F_Pressed;
 bool Environment::E_Pressed;
 
 unsigned int Environment::windowWidth, Environment::windowHeight;
+
+unsigned int Environment::depthMapFBO;

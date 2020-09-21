@@ -108,5 +108,7 @@
     </None>
     <None Include="data\shaders\f_light_src_shader.glsl" />
     <None Include="data\shaders\v_light_src_shader.glsl" />
+    <None Include="data\shaders\f_shadow_shader.glsl" />
+    <None Include="data\shaders\v_shadow_shader.glsl" />
   </ItemGroup>
 </Project>

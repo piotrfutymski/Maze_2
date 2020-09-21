@@ -12,6 +12,8 @@ struct Light
 {
 	glm::vec3 position;
 	glm::vec3 color;
+	glm::mat4 lightSpaceMatrix;
+	unsigned int depthMap;
 };
 
 struct Area
@@ -45,6 +47,6 @@ public:
 	static bool F_Pressed;
 	static bool E_Pressed;
 
-
-
+	static unsigned int depthMapFBO;
+	static const unsigned int smapWidth = 2048, smapHeight = 2048;
 };

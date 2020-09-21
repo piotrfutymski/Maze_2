@@ -5,7 +5,7 @@
 class Skull : public Object
 {
 public:
-	Skull(ShaderProgram* p, Model* m, Texture* td, Texture* th, Texture* tn, const glm::vec3 & pp, const glm::mat4& M = glm::mat4(1.0f));
+	Skull(ShaderProgram* p, ShaderProgram* s, Model* m, Texture* td, Texture* th, Texture* tn, const glm::vec3 & pp, const glm::mat4& M = glm::mat4(1.0f));
 
 	virtual void update(float dt);
 

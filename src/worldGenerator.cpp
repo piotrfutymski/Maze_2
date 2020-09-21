@@ -98,22 +98,22 @@ void WorldGenerator::buildLightSource(const glm::mat4& M, glm::vec3& pos, int c,
 
 void WorldGenerator::buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
-	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), pos));
+	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _shaders["shadow"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), pos));
 }
 
 void WorldGenerator::buildFloorUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
-	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _models["unit"].get(), _textures["stone"].get(), _textures["stone_h"].get(), _textures["stone_n"].get(), pos));
+	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _shaders["shadow"].get(), _models["unit"].get(), _textures["stone"].get(), _textures["stone_h"].get(), _textures["stone_n"].get(), pos));
 }
 
 void WorldGenerator::buildCailUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
-	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _models["unit"].get(), _textures["cail"].get(), _textures["cail"].get(), _textures["cail"].get(), pos));
+	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _shaders["shadow"].get(), _models["unit"].get(), _textures["cail"].get(), _textures["cail"].get(), _textures["cail"].get(), pos));
 }
 
 void WorldGenerator::buildSkull(const glm::vec3 & p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
-	e.emplace_back(std::make_unique<Skull>(_shaders["base"].get(), _models["skull"].get(), _textures["skull"].get(), _textures["skull"].get(), _textures["skull"].get(),p, pos));
+	e.emplace_back(std::make_unique<Skull>(_shaders["base"].get(), _shaders["shadow"].get(), _models["skull"].get(), _textures["skull"].get(), _textures["skull"].get(), _textures["skull"].get(),p, pos));
 }
 
 void WorldGenerator::loadShaders()
@@ -121,6 +121,7 @@ void WorldGenerator::loadShaders()
 	_shaders.emplace("base", std::make_unique<ShaderProgram>("data/shaders/v_base_shader.glsl", "data/shaders/f_base_shader.glsl"));
 	_shaders.emplace("camera", std::make_unique<ShaderProgram>("data/shaders/v_camera_shader.glsl", "data/shaders/f_camera_shader.glsl"));
 	_shaders.emplace("light_src", std::make_unique<ShaderProgram>("data/shaders/v_light_src_shader.glsl", "data/shaders/f_light_src_shader.glsl"));
+	_shaders.emplace("shadow", std::make_unique<ShaderProgram>("data/shaders/v_shadow_shader.glsl", "data/shaders/f_shadow_shader.glsl"));
 }
 
 void WorldGenerator::loadTextures()

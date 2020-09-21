@@ -13,14 +13,14 @@ class Entity
 {
 public:
 
-	Entity(ShaderProgram* program);
+	Entity(ShaderProgram* program, ShaderProgram* shadow=0);
 
 	virtual void draw() = 0;
-
+	virtual void shadow(glm::mat4& lightSpaceMatrix) {}
 	virtual void update(float dt) = 0;
 
 protected:
 
-	ShaderProgram * _shaderProgram;
+	ShaderProgram * _shaderProgram, *_shadowShader;
 
 };

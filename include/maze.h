@@ -27,6 +27,7 @@ private:
 	bool initOpenGL();
 
 	void processInput();
+	void shadow();
 	void renderWindow();
 
 private:

@@ -10,6 +10,7 @@ layout (location=4) in vec3 aBitangent;
 //Zmienne interpolowane
 
 out vec2 texCoords;
+out vec4 pos;
 out vec3 tanViewPos;
 out vec3 tanPos;
 out mat3 TBN;
@@ -31,6 +32,7 @@ void main()
     TBN = transpose(mat3(T, B, N));
 
     texCoords = aTexCoords;
+    pos = M * vec4(aVertex, 1.0);
 
     tanViewPos = TBN * viewPos;
     tanPos = TBN * vec3(M * vec4(aVertex, 1.0));
