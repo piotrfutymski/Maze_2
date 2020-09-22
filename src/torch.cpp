@@ -45,17 +45,26 @@ void Torch::update(float dt)
 		_Lsrc->setStrength(0.0);
 	else
 	{
-		_Lsrc->setStrength(1.0);
-		if (_particles.size() < 10000)
-		{
-			int num = 1000 * dt;
+		if (_particles.size() > 6400)
+			_Lsrc->setStrength(1.0);
+		else if (_particles.size() > 5200)
+			_Lsrc->setStrength(1.0f - float (6400 - _particles.size()) / 2400.0f);
+		else
+			_Lsrc->setStrength(0.5 * _particles.size()/ 5200);
+
+		int r = std::rand()%400;
+
+		if (_particles.size() < 6000)
+		{	
 			int i = 0;
-			while (_particles.size() < 10000 && i < num)
+			while (i < r + 10)
 			{
 				this->createParticle();
 				++i;
 			}
 		}
+		for (int i = 0; i < 10; i++)
+			this->createParticle();
 
 	}
 
@@ -66,35 +75,37 @@ void Torch::draw()
 	this->Object::draw();
 	_Lsrc->draw();
 
+	glUseProgram(_particleShader->get());
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, _particleTxt->get());
+	glUniform1i(_particleShader->u("tex"), 0);
+	glUniformMatrix4fv(_particleShader->u("P"), 1, false, glm::value_ptr(Environment::P));
+	glUniformMatrix4fv(_particleShader->u("V"), 1, false, glm::value_ptr(Environment::V));
+
+	glBindVertexArray(_particleModel->get());
+
 	for (auto& x : _particles)
 	{
-		glUseProgram(_particleShader->get());
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, _particleTxt->get());
-		glUniform1i(_particleShader->u("tex"), 0);
-
+	
 		glm::mat4 M(1.0);
 		M = glm::translate(M, x.Position);
-		auto u = 10.0 + 10 *  (1 - x.Life / x.FLife);
+		auto u = 8.0 + 10 *  (1 - x.Life / x.FLife);
 		M = glm::scale(M, glm::vec3(0.005 * u, 0.005 * u, 0.005 * u));
 
-		glUniformMatrix4fv(_particleShader->u("P"), 1, false, glm::value_ptr(Environment::P));
-		glUniformMatrix4fv(_particleShader->u("V"), 1, false, glm::value_ptr(Environment::V));
 		glUniformMatrix4fv(_particleShader->u("M"), 1, false, glm::value_ptr(M));
-
 		glUniform4fv (_particleShader->u("color"), 1, glm::value_ptr(x.Color));
 
-		glBindVertexArray(_particleModel->get());
+
 		glDrawArrays(GL_TRIANGLES, 0, _particleModel->count());
 	}
 }
 
 void Torch::createParticle()
 {
-	double posX = -0.2;
-	double posY = -0.2;
-	double posZ = -0.2;
+	double posX = -0.1;
+	double posY = -0.1;
+	double posZ = -0.1;
 	float angleV = -20;
 	float angleA = std::rand()%360;
 	double speed = 0;
@@ -102,9 +113,9 @@ void Torch::createParticle()
 
 	for (int i = 0; i < 10; i++)
 	{
-		posX += double(std::rand() % 100) / 2500.0;
-		posY += double(std::rand() % 100) / 2500.0;
-		posZ += double(std::rand() % 100) / 2500.0;
+		posX += double(std::rand() % 100) / 5000.0;
+		posY += double(std::rand() % 100) / 5000.0;
+		posZ += double(std::rand() % 100) / 5000.0;
 		angleV += (std::rand() % 100) / 25;
 
 		speed += double(std::rand() % 100) / 500;
