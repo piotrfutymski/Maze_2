@@ -43,10 +43,10 @@ void main()
         vec4 lightSpacePos = lightSpaceMatrix[i] * pos;
         vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
         projCoords = projCoords * 0.5 + 0.5;    //transform from [-1,1] into [0,1]
-
         float closestDepth = texture(sMap[i], projCoords.xy).r;
         float currentDepth = projCoords.z; 
-        if(currentDepth - 0.002 <= closestDepth) //if there is nothing on the way we can apply light 
+
+        if(currentDepth - 0.002 <= closestDepth || projCoords.z > 1.0 ||  projCoords.z < 0.0) //if there is nothing on the way we can apply light 
         { 
         vec3 reflectDirection = reflect(-lightDirection, normal);
 

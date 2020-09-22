@@ -1,6 +1,5 @@
 #include "object.h"
 
-
 Object::Object(ShaderProgram* p, ShaderProgram* s, Model* m, Texture* td, Texture* th, Texture* tn, const glm::mat4& M)
 	:Entity(p,s), _mod(m), _diffMap(td), _heightMap(th), _normMap(tn), _M(M)
 {

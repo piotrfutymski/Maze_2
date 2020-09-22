@@ -1,17 +1,18 @@
 #include "LightSrc.h"
 
 LightSrc::LightSrc(ShaderProgram* p, Model* m, glm::mat4 M, glm::vec3& pos, glm::vec3& color)
-	: Entity(p), _mod(m), _M(M)
+	: Entity(p), _mod(m), _M(M), envID(Environment::lightsCount++)
 {
-	Environment::lights[Environment::lightsCount].position = pos;
-	Environment::lights[Environment::lightsCount].color = color;
+	Environment::lights[envID].position = pos;
+	Environment::lights[envID].color = color;
+    Environment::lights[envID].strength = 1.f;
 
     glm::mat4 lightProjection, lightView;
     float near_plane = 0.1f, far_plane = 80.f;
-    // note that if you use a perspective projection matrix you'll have to change the light position as the current light position isn't enough to reflect the whole scene
+
     lightView = glm::lookAt(pos, glm::vec3(2.5f, 1.5f, 0.f), glm::vec3(0.0, 1.0, 0.0));
     lightProjection = glm::perspective(glm::radians(90.f), (GLfloat)Environment::smapWidth / (GLfloat)Environment::smapHeight, near_plane, far_plane);
-    Environment::lights[Environment::lightsCount].lightSpaceMatrix = lightProjection * lightView;
+    Environment::lights[envID].lightSpaceMatrix = lightProjection * lightView;
 
     // Creating Depth Texture
     unsigned int depthMap;
@@ -25,8 +26,24 @@ LightSrc::LightSrc(ShaderProgram* p, Model* m, glm::mat4 M, glm::vec3& pos, glm:
     float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
-    Environment::lights[Environment::lightsCount++].depthMap = depthMap;
+    Environment::lights[envID].depthMap = depthMap;
 }
+
+void LightSrc::changePos(glm::vec3& pos)
+{
+    Environment::lights[envID].position = pos;
+}
+
+void LightSrc::changeColor(glm::vec3& color)
+{
+    Environment::lights[envID].color = color;
+}
+
+void LightSrc::setStrength(float scale)
+{
+    Environment::lights[envID].strength = scale;
+}
+
 
 void LightSrc::draw()
 {
