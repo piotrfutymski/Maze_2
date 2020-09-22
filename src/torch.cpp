@@ -21,6 +21,9 @@ Torch::Torch(ShaderProgram* p, ShaderProgram* s, ShaderProgram* l, Model* m, Tex
 
 void Torch::update(float dt)
 {
+	if (glm::distance(_pos, Environment::cameraPosition) > 7)
+		return;
+
 	_Lsrc->update(dt);
 
 	for (auto& x : _particles)
@@ -40,17 +43,17 @@ void Torch::update(float dt)
 	}
 
 	_particles.erase(std::remove_if(_particles.begin(), _particles.end(), to_kill), _particles.end());
+	if (_particles.size() > 6400)
+		_Lsrc->setStrength(1.0);
+	else if (_particles.size() > 5200)
+		_Lsrc->setStrength(1.0f - float(6400 - _particles.size()) / 2400.0f);
+	else
+		_Lsrc->setStrength(0.5 * _particles.size() / 5200);
 
 	if (Environment::objectStates[id] != 3)
 		_Lsrc->setStrength(0.0);
 	else
 	{
-		if (_particles.size() > 6400)
-			_Lsrc->setStrength(1.0);
-		else if (_particles.size() > 5200)
-			_Lsrc->setStrength(1.0f - float (6400 - _particles.size()) / 2400.0f);
-		else
-			_Lsrc->setStrength(0.5 * _particles.size()/ 5200);
 
 		int r = std::rand()%400;
 
@@ -76,6 +79,9 @@ void Torch::shadow(glm::mat4& lightSpaceMatrix)
 
 void Torch::draw()
 {
+	if (glm::distance(_pos, Environment::cameraPosition) > 7)
+		return;
+
 	this->Object::draw();
 	_Lsrc->draw();
 
