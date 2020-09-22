@@ -46,7 +46,7 @@ void Object::draw()
 
 	s = "lightColors[";
 	for (int i = 0; i < Environment::lightsCount; i++)
-		glUniform3fv(_shaderProgram->u((s + std::to_string(i) + ']').c_str()), 1, glm::value_ptr(Environment::lights[i].color));
+		glUniform3fv(_shaderProgram->u((s + std::to_string(i) + ']').c_str()), 1, glm::value_ptr(Environment::lights[i].color * Environment::lights[i].strength));
 
 	s = "lightSpaceMatrix[";
 	for (int i = 0; i < Environment::lightsCount; i++)

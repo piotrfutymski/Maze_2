@@ -179,11 +179,13 @@
   <ItemGroup>
     <None Include="data\shaders\f_base_shader.glsl" />
     <None Include="data\shaders\f_camera_shader.glsl" />
+    <None Include="data\shaders\f_particle_shader.glsl" />
     <None Include="data\shaders\f_shadow_shader.glsl" />
     <None Include="data\shaders\v_base_shader.glsl" />
     <None Include="data\shaders\v_camera_shader.glsl" />
     <None Include="data\shaders\f_light_src_shader.glsl" />
     <None Include="data\shaders\v_light_src_shader.glsl" />
+    <None Include="data\shaders\v_particle_shader.glsl" />
     <None Include="data\shaders\v_shadow_shader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
