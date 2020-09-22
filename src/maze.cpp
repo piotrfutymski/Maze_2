@@ -14,6 +14,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 int Maze::play()
 {
+	srand(time(NULL));
 	if (this->init() == false)
 		return -1;
 

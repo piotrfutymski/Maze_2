@@ -126,7 +126,8 @@ void WorldGenerator::buildTorch(const glm::vec3& p, const glm::mat4& pos, std::v
 	glm::mat4 tmpM(1.0f);
 	tmpM = glm::rotate(tmpM, glm::radians(120.0f), glm::vec3(1.0, 0, 0));
 	tmpM = glm::scale(tmpM, glm::vec3(0.5, 0.5, 0.5));
-	e.emplace_back(std::make_unique<Torch>(_shaders["base"].get(), _shaders["shadow"].get(), _shaders["light_src"].get(), _models["torch"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), param, p, pos * tmpM));
+	e.emplace_back(std::make_unique<Torch>(_shaders["base"].get(), _shaders["shadow"].get(), _shaders["light_src"].get(), _models["torch"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), param, p, 
+		_shaders["particle"].get(), _textures["particle"].get(), _models["particle"].get() ,pos * tmpM));
 }
 
 void WorldGenerator::buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
@@ -150,6 +151,7 @@ void WorldGenerator::loadShaders()
 	_shaders.emplace("camera", std::make_unique<ShaderProgram>("data/shaders/v_camera_shader.glsl", "data/shaders/f_camera_shader.glsl"));
 	_shaders.emplace("light_src", std::make_unique<ShaderProgram>("data/shaders/v_light_src_shader.glsl", "data/shaders/f_light_src_shader.glsl"));
 	_shaders.emplace("shadow", std::make_unique<ShaderProgram>("data/shaders/v_shadow_shader.glsl", "data/shaders/f_shadow_shader.glsl"));
+	_shaders.emplace("particle", std::make_unique<ShaderProgram>("data/shaders/v_particle_shader.glsl", "data/shaders/f_particle_shader.glsl"));
 }
 
 void WorldGenerator::loadTextures()
@@ -163,6 +165,8 @@ void WorldGenerator::loadTextures()
 	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/wall_h.png"));
 	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/wall_n.png"));
 	_textures.emplace("cail", std::make_unique<Texture>("data/textures/stoneCail.png"));
+	_textures.emplace("particle", std::make_unique<Texture>("data/textures/part.png"));
+
 }
 
 void WorldGenerator::loadModels()
@@ -170,4 +174,5 @@ void WorldGenerator::loadModels()
 	_models.emplace("unit", std::make_unique<Model>("data/models/unit.obj"));
 	_models.emplace("skull", std::make_unique <Model>("data/models/skull.obj"));
 	_models.emplace("torch", std::make_unique <Model>("data/models/torch.obj"));
+	_models.emplace("particle", std::make_unique <Model>("data/models/particle.obj"));
 }

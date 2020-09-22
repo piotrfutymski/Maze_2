@@ -122,5 +122,11 @@
     <None Include="data\shaders\v_light_src_shader.glsl" />
     <None Include="data\shaders\f_shadow_shader.glsl" />
     <None Include="data\shaders\v_shadow_shader.glsl" />
+    <None Include="data\shaders\f_particle_shader.glsl">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="data\shaders\v_particle_shader.glsl">
+      <Filter>Pliki zasobów</Filter>
+    </None>
   </ItemGroup>
 </Project>
