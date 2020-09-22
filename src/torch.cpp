@@ -44,11 +44,11 @@ void Torch::update(float dt)
 
 	_particles.erase(std::remove_if(_particles.begin(), _particles.end(), to_kill), _particles.end());
 	if (_particles.size() > 6400)
-		_Lsrc->setStrength(1.0);
+		_Lsrc->setStrength(4.0);
 	else if (_particles.size() > 5200)
-		_Lsrc->setStrength(1.0f - float(6400 - _particles.size()) / 2400.0f);
+		_Lsrc->setStrength(4.0f - 4.0 *float(6400 - _particles.size()) / 2400.0f);
 	else
-		_Lsrc->setStrength(0.5 * _particles.size() / 5200);
+		_Lsrc->setStrength(2.0 * _particles.size() / 5200);
 
 	if (Environment::objectStates[id] != 3)
 		_Lsrc->setStrength(0.0);
