@@ -15,6 +15,10 @@ Torch::Torch(ShaderProgram* p, ShaderProgram* s, ShaderProgram* l, Model* m, Tex
 	_pos.z = pos.z + 0.4;
 
 	id = i;
+	if (id > 3)
+	{
+		Environment::objectStates[id] = 3;
+	}
 	_empty = std::make_unique < Model>();
 	_Lsrc = std::make_unique<LightSrc>(l, _empty.get(), M, _pos, baseLColor);
 }
