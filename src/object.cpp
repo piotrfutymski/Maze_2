@@ -42,22 +42,26 @@ void Object::draw()
 
 	std::string s = "lightPos[";
 	for (int i = 0; i < Environment::lightsCount; i++)
-		glUniform3fv(_shaderProgram->u(((s + (char)('0'+i))+']').c_str()), 1, glm::value_ptr(Environment::lights[i].position));
+		glUniform3fv(_shaderProgram->u((s + std::to_string(i) + ']').c_str()), 1, glm::value_ptr(Environment::lights[i].position));
 
 	s = "lightColors[";
 	for (int i = 0; i < Environment::lightsCount; i++)
-		glUniform3fv(_shaderProgram->u(((s + (char)('0' + i)) + ']').c_str()), 1, glm::value_ptr(Environment::lights[i].color));
+		glUniform3fv(_shaderProgram->u((s + std::to_string(i) + ']').c_str()), 1, glm::value_ptr(Environment::lights[i].color));
 
 	s = "lightSpaceMatrix[";
 	for (int i = 0; i < Environment::lightsCount; i++)
-		glUniformMatrix4fv(_shaderProgram->u(((s + (char)('0' + i)) + ']').c_str()), 1, false, glm::value_ptr(Environment::lights[i].lightSpaceMatrix));
+		for (int j = 0; j < 6; j++)
+			glUniformMatrix4fv(_shaderProgram->u((s + std::to_string(i * 6 + j) + ']').c_str()), 1, false, glm::value_ptr(Environment::lights[i].lightSpaceMatrix[j]));
 
 	s = "sMap[";
 	for (int i = 0; i < Environment::lightsCount; i++)
 	{
-		glActiveTexture(GL_TEXTURE3 + i);
-		glBindTexture(GL_TEXTURE_2D, Environment::lights[i].depthMap);
-		glUniform1i(_shaderProgram->u(((s + (char)('0' + i)) + ']').c_str()), 3+i);
+		for (int j = 0; j < 6; j++)
+		{
+			glActiveTexture(GL_TEXTURE3 + i * 6 + j);
+			glBindTexture(GL_TEXTURE_2D, Environment::lights[i].depthMap[j]);
+			glUniform1i(_shaderProgram->u((s + std::to_string(i * 6 + j) + ']').c_str()), 3 + i * 6 + j);
+		}
 	}
 
 	glUniform1i(_shaderProgram->u("lightCount"), Environment::lightsCount);

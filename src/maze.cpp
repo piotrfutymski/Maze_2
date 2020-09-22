@@ -110,12 +110,13 @@ void Maze::shadow()
 	glReadBuffer(GL_NONE);
 
 	for (int i = 0; i < Environment::lightsCount; i++)
-	{
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, Environment::lights[i].depthMap , 0); //attach depth texture to depth FBO depth buffer
-		glClear(GL_DEPTH_BUFFER_BIT);
-		for (auto& entity : _entities)
-			entity->shadow(Environment::lights[i].lightSpaceMatrix);
-	}
+		for (int j = 0; j < 6; j++)
+		{
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, Environment::lights[i].depthMap[j], 0); //attach depth texture to depth FBO depth buffer
+			glClear(GL_DEPTH_BUFFER_BIT);
+			for (auto& entity : _entities)
+				entity->shadow(Environment::lights[i].lightSpaceMatrix[j]);
+		}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0); //reset framebuffer to default
 	glViewport(0, 0, Environment::windowWidth, Environment::windowHeight); //reset viewport

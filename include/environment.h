@@ -12,9 +12,9 @@ struct Light
 {
 	glm::vec3 position;
 	glm::vec3 color;
-	glm::mat4 lightSpaceMatrix;
+	glm::mat4 lightSpaceMatrix[6];
 	float strength;
-	unsigned int depthMap;
+	unsigned int depthMap[6];
 };
 
 struct Area
@@ -41,7 +41,7 @@ public:
 
 	static int objectStates[5];
 
-	static Light lights[8];
+	static Light lights[5];
 	static GLuint lightsCount;
 
 	static std::map<int, Area> height_map;

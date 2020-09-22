@@ -12,10 +12,10 @@ uniform sampler2D diffuseMap;
 uniform sampler2D heightMap;
 uniform sampler2D normalMap;
 
-uniform vec3 lightPos[8];
-uniform vec3 lightColors[8];
-uniform sampler2D sMap[8];
-uniform mat4 lightSpaceMatrix[8];
+uniform vec3 lightPos[5];
+uniform vec3 lightColors[5];
+uniform sampler2D sMap[5*6];
+uniform mat4 lightSpaceMatrix[5*6];
 uniform int lightCount;
 
 void main()
@@ -36,18 +36,61 @@ void main()
     vec3 phongLight = vec3(0.1, 0.1, 0.1);
     for(int i = 0; i < lightCount; i++)
     {
-        vec3 tanLightPos = TBN*lightPos[i];
-        vec3 lightDirection = normalize(tanLightPos - tanPos); 
+        //divide space to check witch shadowMap to use
+        vec3 lightBeam =  vec3(pos) - lightPos[i];
+        int sMapIndex=0;
+        if(lightBeam.z < lightBeam.x)
+             if(lightBeam.z > -lightBeam.x)
+             {
+                if(lightBeam.y > lightBeam.x)   //y
+                    sMapIndex=1;
+                else if(lightBeam.y > -lightBeam.x)  //x
+                    sMapIndex=0;
+                else    //-y
+                    sMapIndex=4;
+             }
+             else
+             {
+                if(lightBeam.y > -lightBeam.z) // y
+                    sMapIndex=1;
+                else if(lightBeam.y > lightBeam.z) // -z
+                    sMapIndex=5;
+                else    //-y
+                    sMapIndex=4;
+             }
+        else
+            if(lightBeam.z > -lightBeam.x)
+             {
+                if(lightBeam.y > lightBeam.z) // y
+                    sMapIndex=1;
+                else if(lightBeam.y > -lightBeam.z) // z
+                    sMapIndex=2;
+                else    //-y
+                    sMapIndex=4;
+             }  
+             else
+             {
+                if(lightBeam.y > -lightBeam.x)   //y
+                    sMapIndex=1;
+                else if(lightBeam.y > lightBeam.x)  //-x
+                    sMapIndex=3;
+                else    //-y
+                    sMapIndex=4;
+             }
 
-        //shadowMapping
-        vec4 lightSpacePos = lightSpaceMatrix[i] * pos;
+        vec4 lightSpacePos = lightSpaceMatrix[i*6 + sMapIndex] * pos;
+
         vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
         projCoords = projCoords * 0.5 + 0.5;    //transform from [-1,1] into [0,1]
-        float closestDepth = texture(sMap[i], projCoords.xy).r;
+
+        float closestDepth = texture(sMap[i*6 + sMapIndex], projCoords.xy).r;
         float currentDepth = projCoords.z; 
 
-        if(currentDepth - 0.002 <= closestDepth || projCoords.z > 1.0 ||  projCoords.z < 0.0) //if there is nothing on the way we can apply light 
+        if(currentDepth - 0.002 <= closestDepth ) //if there is nothing on the way we can apply light 
         { 
+        vec3 tanLightPos = TBN*lightPos[i];
+        vec3 lightDirection = normalize(tanLightPos - tanPos);
+
         vec3 reflectDirection = reflect(-lightDirection, normal);
 
         float dist = distance(tanPos, tanLightPos);

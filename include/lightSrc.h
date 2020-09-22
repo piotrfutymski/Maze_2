@@ -17,8 +17,6 @@ public:
 
 	void setStrength(float scale);
 private:
-
-	
 	Model* _mod;
 	glm::mat4 _M;
 	const unsigned int envID;

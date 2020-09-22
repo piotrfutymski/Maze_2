@@ -60,7 +60,7 @@ glm::mat4 Environment::V;
 
 glm::vec3 Environment::cameraPosition;
 
-Light Environment::lights[8];
+Light Environment::lights[5];
 GLuint Environment::lightsCount=0;
 
 glm::vec3  Environment::cameraNormal;
