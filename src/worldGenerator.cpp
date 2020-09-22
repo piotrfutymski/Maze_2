@@ -156,16 +156,16 @@ void WorldGenerator::loadShaders()
 
 void WorldGenerator::loadTextures()
 {
-	_textures.emplace("camera_ico", std::make_unique<Texture>("data/textures/c_ico.png"));
-	_textures.emplace("skull", std::make_unique<Texture>("data/textures/skull.png"));
-	_textures.emplace("stone", std::make_unique<Texture>("data/textures/stone.png"));
-	_textures.emplace("stone_h", std::make_unique<Texture>("data/textures/stone_h.png"));
-	_textures.emplace("stone_n", std::make_unique<Texture>("data/textures/stone_n.png"));
-	_textures.emplace("wall", std::make_unique<Texture>("data/textures/wall.png"));
-	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/wall_h.png"));
-	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/wall_n.png"));
-	_textures.emplace("cail", std::make_unique<Texture>("data/textures/stoneCail.png"));
-	_textures.emplace("particle", std::make_unique<Texture>("data/textures/part.png"));
+	_textures.emplace("camera_ico", std::make_unique<Texture>("data/textures/c_ico.png",0, 0.f));
+	_textures.emplace("skull", std::make_unique<Texture>("data/textures/skull.png", 8, 0.f));
+	_textures.emplace("stone", std::make_unique<Texture>("data/textures/stone.png", 64, 0.1f));
+	_textures.emplace("stone_h", std::make_unique<Texture>("data/textures/stone_h.png", 0, 0.f));
+	_textures.emplace("stone_n", std::make_unique<Texture>("data/textures/stone_n.png", 0, 0.f));
+	_textures.emplace("wall", std::make_unique<Texture>("data/textures/wall.png", 128, 0.2f));
+	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/wall_h.png", 0, 0.f));
+	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/wall_n.png", 0, 0.f));
+	_textures.emplace("cail", std::make_unique<Texture>("data/textures/stoneCail.png", 0, 0.f));
+	_textures.emplace("particle", std::make_unique<Texture>("data/textures/part.png", 0, 0.f));
 
 }
 

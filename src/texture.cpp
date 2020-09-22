@@ -1,7 +1,8 @@
 #include "..\include\texture.h"
 
 
-Texture::Texture(const char* filename)
+Texture::Texture(const char* filename, int shiny, float parallaxScale)
+    : shininess(shiny), parallaxStrength(parallaxScale)
 {
     //Wczytanie do pamiêci komputera
     std::vector<unsigned char> image;   //Alokuj wektor do wczytania obrazka

@@ -11,9 +11,11 @@ class Texture
 {
 public:
 
-	Texture(const char* filename);
+	Texture(const char* filename, int shiny, float parallaxScale);
 
 	GLuint get()const;
+	int shininess;
+	float parallaxStrength;
 
 private:
 
