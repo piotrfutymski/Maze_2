@@ -7,7 +7,7 @@
 class LightSrc : public Entity
 {
 public:
-	LightSrc(ShaderProgram* p, Model* m, glm::mat4 M, glm::vec3& pos, glm::vec3& color);
+	LightSrc(ShaderProgram* p, Model* m, glm::mat4 M, const glm::vec3& pos, const glm::vec3& color);
 	virtual void draw() override;
 	virtual void update(float dt) override;
 

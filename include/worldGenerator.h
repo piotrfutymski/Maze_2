@@ -7,7 +7,7 @@
 #include "Skull.h"
 #include "lightSrc.h"
 #include "door.h"
-
+#include "troch.h"
 
 class WorldGenerator
 {
@@ -27,6 +27,7 @@ private:
 	void buildLightSource(const glm::mat4& M, glm::vec3& pos, int c, std::vector<std::unique_ptr<Entity>>& e);
 	void buildSkull(const glm::vec3& p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int param);
 	void buildDoor(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int param);
+	void buildTorch(const glm::vec3& p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int param);
 
 	void buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 	void buildFloorUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);

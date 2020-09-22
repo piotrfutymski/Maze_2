@@ -65,7 +65,7 @@ GLuint Environment::lightsCount=0;
 
 glm::vec3  Environment::cameraNormal;
 
-int  Environment::objectStates[5];
+int  Environment::objectStates[15];
 
 std::map<int, Area> Environment::height_map;
 

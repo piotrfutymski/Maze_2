@@ -1,7 +1,8 @@
 #include "LightSrc.h"
 
-LightSrc::LightSrc(ShaderProgram* p, Model* m, glm::mat4 M, glm::vec3& pos, glm::vec3& color)
+LightSrc::LightSrc(ShaderProgram* p, Model* m, glm::mat4 M, const glm::vec3& pos,const glm::vec3& color)
 	: Entity(p), _mod(m), _M(M), envID(Environment::lightsCount++)
+
 {
 	Environment::lights[envID].color = color;
     Environment::lights[envID].strength = 1.f;
@@ -59,7 +60,7 @@ void LightSrc::setStrength(float scale)
 void LightSrc::draw()
 {
 	glUseProgram(_shaderProgram->get());
-
+  
 	glUniformMatrix4fv(_shaderProgram->u("P"), 1, false, glm::value_ptr(Environment::P));
 	glUniformMatrix4fv(_shaderProgram->u("V"), 1, false, glm::value_ptr(Environment::V));
 	glUniformMatrix4fv(_shaderProgram->u("M"), 1, false, glm::value_ptr(_M));
