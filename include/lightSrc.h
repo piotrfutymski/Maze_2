@@ -11,9 +11,9 @@ public:
 	virtual void draw() override;
 	virtual void update(float dt) override;
 
-	void changePos(glm::vec3& pos);
+	void changePos(const glm::vec3& pos);
 
-	void changeColor(glm::vec3& color);
+	void changeColor(const glm::vec3& color);
 
 	void setStrength(float scale);
 private:

@@ -19,6 +19,7 @@ int Maze::play()
 
 	glfwSetTime(0);
 
+	unsigned int counter = 0;
 	while (!glfwWindowShouldClose(_window))
 	{
 		this->processInput();
