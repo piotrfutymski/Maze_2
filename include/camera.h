@@ -28,11 +28,11 @@ private:
 
 	void rotate(const glm::vec2& move);
 
-	glm::vec3 _pos = { 0.5f, 1.6f, 0.5f};
-	glm::vec3 _normal = {-1.0f, 0.0f, 0.0f};
+	glm::vec3 _pos = { 2.5f, 1.6f, 4.0f};
+	glm::vec3 _normal = {0.0f, 0.0f, 0.0f};
 	glm::vec3 _head = { 0.0f, 1.0f, 0.0f};
 	glm::vec3 _up = { 0.0f, 1.0f, 0.0f };
-	float yaw = 0.0f;
+	float yaw = -90.0f;
 	float pitch = 0.0f;
 
 	float _speed = 2.0;
