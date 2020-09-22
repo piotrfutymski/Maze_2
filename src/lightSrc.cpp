@@ -10,7 +10,7 @@ LightSrc::LightSrc(ShaderProgram* p, Model* m, glm::mat4 M, glm::vec3& pos, glm:
     float near_plane = 0.1f, far_plane = 80.f;
     // note that if you use a perspective projection matrix you'll have to change the light position as the current light position isn't enough to reflect the whole scene
     lightView = glm::lookAt(pos, glm::vec3(2.5f, 1.5f, 0.f), glm::vec3(0.0, 1.0, 0.0));
-    lightProjection = glm::perspective(glm::radians(170.0f), (GLfloat)Environment::smapWidth / (GLfloat)Environment::smapHeight, near_plane, far_plane);
+    lightProjection = glm::perspective(glm::radians(90.f), (GLfloat)Environment::smapWidth / (GLfloat)Environment::smapHeight, near_plane, far_plane);
     Environment::lights[Environment::lightsCount].lightSpaceMatrix = lightProjection * lightView;
 
     // Creating Depth Texture

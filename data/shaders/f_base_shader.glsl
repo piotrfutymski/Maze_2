@@ -46,7 +46,7 @@ void main()
 
         float closestDepth = texture(sMap[i], projCoords.xy).r;
         float currentDepth = projCoords.z; 
-        if(currentDepth - 0.001 <= closestDepth) //if there is nothing on the way we can apply light 
+        if(currentDepth - 0.002 <= closestDepth) //if there is nothing on the way we can apply light 
         { 
         vec3 reflectDirection = reflect(-lightDirection, normal);
 

@@ -97,7 +97,7 @@ void WorldGenerator::buildLightSource(const glm::mat4& M, glm::vec3& pos, int c,
 {
 	glm::vec3 color;
 	if (c == 0)
-		color = glm::vec3(0.5, 0.5, 1.0);
+		color = glm::vec3(0., 0., 1.0);
 
 	glm::mat4 tmpM(1.0f);
 	tmpM = glm::scale(tmpM, glm::vec3(0.01, 0.01, 0.01));
