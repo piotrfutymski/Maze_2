@@ -1,5 +1,11 @@
 #include "model.h"
 
+Model::Model()
+{
+	_mesh = {};
+	sendToGpu();
+}
+
 Model::Model(std::string objPath)
 {
 	std::vector<glm::vec3> v;

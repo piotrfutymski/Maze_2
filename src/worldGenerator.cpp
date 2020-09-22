@@ -41,6 +41,8 @@ void WorldGenerator::load(const std::string& filename, std::vector<std::unique_p
 			this->buildSkull(pos, PO, e, param);
 		if (type == 5)
 			this->buildDoor(PO, e, param);
+		if (type == 6)
+			this->buildTorch(pos, PO, e, param);
 	}
 	file.close();
 }
@@ -119,6 +121,14 @@ void WorldGenerator::buildDoor(const glm::mat4& pos, std::vector<std::unique_ptr
 	e.emplace_back(std::make_unique<Door>(_shaders["base"].get(), _shaders["shadow"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), param, pos));
 }
 
+void WorldGenerator::buildTorch(const glm::vec3& p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int param)
+{
+	glm::mat4 tmpM(1.0f);
+	tmpM = glm::rotate(tmpM, glm::radians(120.0f), glm::vec3(1.0, 0, 0));
+	tmpM = glm::scale(tmpM, glm::vec3(0.5, 0.5, 0.5));
+	e.emplace_back(std::make_unique<Torch>(_shaders["base"].get(), _shaders["shadow"].get(), _shaders["light_src"].get(), _models["torch"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), param, p, pos * tmpM));
+}
+
 void WorldGenerator::buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
 	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _shaders["shadow"].get(), _models["unit"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), pos));
@@ -159,4 +169,5 @@ void WorldGenerator::loadModels()
 {
 	_models.emplace("unit", std::make_unique<Model>("data/models/unit.obj"));
 	_models.emplace("skull", std::make_unique <Model>("data/models/skull.obj"));
+	_models.emplace("torch", std::make_unique <Model>("data/models/torch.obj"));
 }

@@ -15,6 +15,8 @@ class Model
 {
 public:
 
+	Model();
+
 	Model(std::string objPath);
 
 	GLuint get() const;
