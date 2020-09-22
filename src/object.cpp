@@ -32,13 +32,11 @@ void Object::draw()
 	glBindTexture(GL_TEXTURE_2D, _normMap->get());
 	glUniform1i(_shaderProgram->u("normalMap"), 2);
 
-	glUniform3fv(_shaderProgram->u("viewPos"), 1, glm::value_ptr(Environment::cameraPosition));
-
 	glUniformMatrix4fv(_shaderProgram->u("P"), 1, false, glm::value_ptr(Environment::P));
 	glUniformMatrix4fv(_shaderProgram->u("V"), 1, false, glm::value_ptr(Environment::V));
 	glUniformMatrix4fv(_shaderProgram->u("M"), 1, false, glm::value_ptr(_M));
 	
-	glUniform1i(_shaderProgram->u("lightCount"), Environment::lightsCount);
+	glUniform3fv(_shaderProgram->u("viewPos"), 1, glm::value_ptr(Environment::cameraPosition));
 
 	std::string s = "lightPos[";
 	for (int i = 0; i < Environment::lightsCount; i++)
@@ -46,7 +44,11 @@ void Object::draw()
 
 	s = "lightColors[";
 	for (int i = 0; i < Environment::lightsCount; i++)
-		glUniform3fv(_shaderProgram->u((s + std::to_string(i) + ']').c_str()), 1, glm::value_ptr(Environment::lights[i].color * Environment::lights[i].strength));
+		glUniform3fv(_shaderProgram->u((s + std::to_string(i) + ']').c_str()), 1, glm::value_ptr(Environment::lights[i].color));
+
+	s = "lightStrength[";
+	for (int i = 0; i < Environment::lightsCount; i++)
+		glUniform1f(_shaderProgram->u((s + std::to_string(i) + ']').c_str()), Environment::lights[i].strength);
 
 	s = "lightSpaceMatrix[";
 	for (int i = 0; i < Environment::lightsCount; i++)
@@ -65,6 +67,8 @@ void Object::draw()
 	}
 
 	glUniform1i(_shaderProgram->u("lightCount"), Environment::lightsCount);
+	glUniform1f(_shaderProgram->u("parallaxStrength"), _diffMap->parallaxStrength);
+	glUniform1i(_shaderProgram->u("shininess"), _diffMap->shininess);
 
 	glBindVertexArray(_mod->get());
 	glDrawArrays(GL_TRIANGLES, 0, _mod->count());
