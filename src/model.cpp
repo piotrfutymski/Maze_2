@@ -84,6 +84,7 @@ void Model::processFace(std::string& line, std::vector<glm::vec3>& v, std::vecto
 	glm::vec2 uv[4];
 	glm::vec3 nm[4];
 
+
 	int vCount = temp.size() / 3;
 	for (int i = 0; i < vCount; i++)
 		pos[i] = v[temp[i * 3] - 1];
