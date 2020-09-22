@@ -46,7 +46,7 @@ void WorldGenerator::load(const std::string& filename, std::vector<std::unique_p
 		if (type == 7)
 			this->buildDesc(PO, e);
 		if (type == 8)
-			this->buildrock(PO, e);
+			this->buildSting(PO, e);
 	}
 	file.close();
 }
@@ -143,9 +143,13 @@ void WorldGenerator::buildDesc(const glm::mat4& pos, std::vector<std::unique_ptr
 	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _shaders["shadow"].get(), _models["desk"].get(), _textures["desk"].get(), _textures["desk_h"].get(), _textures["desk_n"].get(), pos * tmpM));
 }
 
-void WorldGenerator::buildrock(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
+void WorldGenerator::buildSting(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
 {
-	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _shaders["shadow"].get(), _models["rock"].get(), _textures["wall"].get(), _textures["wall_h"].get(), _textures["wall_n"].get(), pos));
+	glm::mat4 tmpM(1.0f);
+	//tmpM = glm::translate(tmpM, glm::vec3(1.15, 0, 0.75));
+	tmpM = glm::rotate(tmpM, glm::radians(-90.0f), glm::vec3(1.0, 0, 0));
+	tmpM = glm::scale(tmpM, glm::vec3(0.02, 0.02, 0.02));
+	e.emplace_back(std::make_unique<Object>(_shaders["base"].get(), _shaders["shadow"].get(), _models["sting"].get(), _textures["sting"].get(), _textures["sting_h"].get(), _textures["sting_n"].get(), pos * tmpM));
 }
 
 void WorldGenerator::buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e)
@@ -176,12 +180,17 @@ void WorldGenerator::loadTextures()
 {
 	_textures.emplace("camera_ico", std::make_unique<Texture>("data/textures/c_ico.png",0, 0.f));
 	_textures.emplace("skull", std::make_unique<Texture>("data/textures/skull.png", 8, 0.f));
-	_textures.emplace("floor", std::make_unique<Texture>("data/textures/f.png", 256, 0.1f));
-	_textures.emplace("floor_h", std::make_unique<Texture>("data/textures/f_h.png", 0, 0.f));
-	_textures.emplace("floor_n", std::make_unique<Texture>("data/textures/f_n.png", 0, 0.f));
+	_textures.emplace("floor", std::make_unique<Texture>("data/textures/stone2.png", 256, 0.1f));
+	_textures.emplace("floor_h", std::make_unique<Texture>("data/textures/stone2_h.png", 0, 0.f));
+	_textures.emplace("floor_n", std::make_unique<Texture>("data/textures/stone2_n.png", 0, 0.f));
 	_textures.emplace("wall", std::make_unique<Texture>("data/textures/wall.png", 128, 0.2f));
 	_textures.emplace("wall_h", std::make_unique<Texture>("data/textures/wall_h.png", 0, 0.f));
 	_textures.emplace("wall_n", std::make_unique<Texture>("data/textures/wall_n.png", 0, 0.f));
+
+	_textures.emplace("sting", std::make_unique<Texture>("data/textures/sting.png", 1024, 0.0f));
+	_textures.emplace("sting_h", std::make_unique<Texture>("data/textures/sting_h.png", 0, 0.f));
+	_textures.emplace("sting_n", std::make_unique<Texture>("data/textures/sting_n.png", 0, 0.f));
+
 
 	_textures.emplace("t", std::make_unique<Texture>("data/textures/t.png", 128, 0.2f));
 	_textures.emplace("t_h", std::make_unique<Texture>("data/textures/t_h.png", 0, 0.f));
@@ -202,4 +211,5 @@ void WorldGenerator::loadModels()
 	_models.emplace("torch", std::make_unique <Model>("data/models/torch.obj"));
 	_models.emplace("particle", std::make_unique <Model>("data/models/particle.obj"));
 	_models.emplace("desk", std::make_unique <Model>("data/models/desk.obj"));
+	_models.emplace("sting", std::make_unique <Model>("data/models/sting.obj"));
 }

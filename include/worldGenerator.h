@@ -30,7 +30,8 @@ private:
 	void buildTorch(const glm::vec3& p, const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e, int param);
 	void buildDesc(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 
-	void buildrock(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
+	void buildSting(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
+
 	void buildUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 	void buildFloorUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
 	void buildCailUnit(const glm::mat4& pos, std::vector<std::unique_ptr<Entity>>& e);
