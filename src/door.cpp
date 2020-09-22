@@ -10,7 +10,7 @@ Door::Door(ShaderProgram* p, ShaderProgram* s, Model* m, Texture* td, Texture* t
 	}
 	if (id == 1)
 	{
-		tmpM = glm::scale(tmpM, glm::vec3(5, 1, 1));
+		tmpM = glm::scale(tmpM, glm::vec3(5.02, 2, 1));
 	}
 
 	baseM = baseM * tmpM;
