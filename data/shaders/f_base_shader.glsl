@@ -36,10 +36,83 @@ void main()
     vec3 phongLight = vec3(0.1, 0.1, 0.1);
     for(int i = 0; i < lightCount; i++)
     {
-        //divide space to check witch shadowMap to use
-        vec3 lightBeam =  vec3(pos) - lightPos[i];
+        //divide space to check which shadowMap to use
+        vec3 lightBeam = vec3(pos) - lightPos[i];
         int sMapIndex=0;
+
+        vec4 lightSpacePos = lightSpaceMatrix[i*6 + sMapIndex] * pos;
+
+        vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
+        projCoords = projCoords * 0.5 + 0.5;    //transform from [-1,1] into [0,1]
+
+        float closestDepth = texture(sMap[i*6 + sMapIndex], projCoords.xy).r;
+        float currentDepth = projCoords.z; 
+
+        if(currentDepth <= closestDepth ) //if there is nothing on the way we can apply light 
+        { 
+        vec3 tanLightPos = TBN*lightPos[i];
+        vec3 lightDirection = normalize(tanLightPos - tanPos);
+
+        vec3 reflectDirection = reflect(-lightDirection, normal);
+
+        float dist = distance(tanPos, tanLightPos);
+        float t_distance = (1 / dist) * (1 / dist);
+    
+        float diff = max(dot(normal, lightDirection), 0.0);
+        float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), 128);
+    
+        vec3 diffuse = lightColors[i] *5* diff * t_distance;
+        vec3 specular = spec * lightColors[i] / dist*5;
+
+        phongLight += (diffuse + specular);
+        }
+     }
+     fragColor = vec4(phongLight*color, 1.0);
+}  
+
+
+
+        /*
+        int sMapIndex=0;
+        vec3 lightBeamSq = lightBeam*lightBeam;
+        if(lightBeamSq.x > lightBeamSq.y)
+            if(lightBeamSq.x > lightBeamSq.z)
+            {
+                //x
+                if(lightBeam.x > 0)
+                    sMapIndex=0;
+                else
+                    sMapIndex=3;
+            }
+            else
+            {
+                //z
+                if(lightBeam.z > 0)
+                    sMapIndex=2;
+                else
+                    sMapIndex=5;
+            }
+        else 
+        {
+            if(lightBeamSq.y > lightBeamSq.z)
+            {
+                //y
+                if(lightBeam.y > 0)
+                    sMapIndex=1;
+                else
+                    sMapIndex=4;
+            }
+            else
+            {
+                //z
+                if(lightBeam.z > 0)
+                    sMapIndex=2;
+                else
+                    sMapIndex=5;
+            }
+        }
         if(lightBeam.z < lightBeam.x)
+        {
              if(lightBeam.z > -lightBeam.x)
              {
                 if(lightBeam.y > lightBeam.x)   //y
@@ -58,7 +131,9 @@ void main()
                 else    //-y
                     sMapIndex=4;
              }
+        }
         else
+        {
             if(lightBeam.z > -lightBeam.x)
              {
                 if(lightBeam.y > lightBeam.z) // y
@@ -77,33 +152,5 @@ void main()
                 else    //-y
                     sMapIndex=4;
              }
-
-        vec4 lightSpacePos = lightSpaceMatrix[i*6 + sMapIndex] * pos;
-
-        vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
-        projCoords = projCoords * 0.5 + 0.5;    //transform from [-1,1] into [0,1]
-
-        float closestDepth = texture(sMap[i*6 + sMapIndex], projCoords.xy).r;
-        float currentDepth = projCoords.z; 
-
-        if(currentDepth - 0.002 <= closestDepth ) //if there is nothing on the way we can apply light 
-        { 
-        vec3 tanLightPos = TBN*lightPos[i];
-        vec3 lightDirection = normalize(tanLightPos - tanPos);
-
-        vec3 reflectDirection = reflect(-lightDirection, normal);
-
-        float dist = distance(tanPos, tanLightPos);
-        float t_distance = (1 / dist) * (1 / dist);
-    
-        float diff = max(dot(normal, lightDirection), 0.0);
-        float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), 128);
-    
-        vec3 diffuse = lightColors[i] * diff * t_distance;
-        vec3 specular = spec * lightColors[i] / dist;
-
-        phongLight += (diffuse + specular);
         }
-     }
-     fragColor = vec4(phongLight*color, 1.0);
-}  
+        sMapIndex=0;*/

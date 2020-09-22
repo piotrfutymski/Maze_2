@@ -2,7 +2,7 @@
 
 void Environment::init(const std::string& filename)
 {
-	P = glm::perspective(60.0f * 3.14f / 180.0f, 1.0f, 0.08f, 50.0f);
+	P = glm::perspective(glm::radians(60.f), (GLfloat)(Environment::windowWidth) / Environment::windowHeight, 0.08f, 50.0f);
 
 	Environment::loadHeights(filename);
 

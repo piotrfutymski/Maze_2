@@ -29,7 +29,7 @@ LightSrc::LightSrc(ShaderProgram* p, Model* m, glm::mat4 M, const glm::vec3& pos
 void LightSrc::changePos(const glm::vec3& pos)
 {
     static glm::mat4 lightProjection, lightView;
-    static float near_plane = 0.1f, far_plane = 80.f;
+    static float near_plane = .1f, far_plane = 50.f;
 
     static glm::vec3 directions[] =
     {
